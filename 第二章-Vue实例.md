@@ -1,7 +1,7 @@
 # 创建一个 Vue 实例
 
 > 每个 Vue 应用都是通过用 Vue 函数创建一个新的 Vue 实例开始的：
-```
+```javascript
 var vm = new Vue({
   // 选项
 })
@@ -14,7 +14,7 @@ var vm = new Vue({
 
 > 当一个 Vue 实例被创建时，它向 Vue 的**响应式系统**中加入了其 data 对象中能找到的所有的属性。当这些属性的值发生改变时，视图将会产生“响应”，即匹配更新为新的值。
 
-```
+```javascript
 // 我们的数据对象
 var data = { a: 1 }
 
@@ -40,13 +40,13 @@ vm.a // => 3
 
  - `(1)` 渲染的概念简单理解就是将数据处理后输出的过程
 
-```
+```javascript
 vm.b = 'hi'
 ```
 
 > 那么对 b 的改动将不会触发任何视图的更新。如果你知道你会在晚些时候需要一个属性，但是一开始它为空或不存在，那么你仅需要设置一些初始值。比如：
 
-```
+```javascript
 data: {
   newTodoText: '',
   visitCount: 0,
@@ -57,7 +57,7 @@ data: {
 ```
 
 > 除了数据属性，Vue 实例还暴露了一些有用的实例属性与方法。它们都有前缀 $，以便与用户定义的属性区分开来。例如：
-```
+```javascript
 var data = { a: 1 }
 var vm = new Vue({
   el: '#example',
@@ -83,7 +83,7 @@ vm.$watch('a', function (newValue, oldValue) {
 
 > 比如 created 钩子可以用来在一个实例被创建之后执行代码：
 
-```
+```javascript
 new Vue({
   data: {
     a: 1

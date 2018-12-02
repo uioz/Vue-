@@ -5,7 +5,7 @@
 HTML的所有元素上的属性都可以使用`v-bind`的指令进行处理,其中`class`和`style`最为特殊,因为他们涉及到了最基础的样式操作.
 
 **注意**:下面的例子默认会包含如下的样式:
-```
+```css
 #example{
     height:100px;
 }
@@ -26,7 +26,7 @@ HTML的所有元素上的属性都可以使用`v-bind`的指令进行处理,其�
 ## 对象语法 
 
 > 我们可以传给 v-bind:class 一个对象，以动态地切换 class：
-```
+```html
 <div v-bind:class="{ active: isActive }"></div>
 ```
 
@@ -39,7 +39,7 @@ HTML的所有元素上的属性都可以使用`v-bind`的指令进行处理,其�
 然后我们把它放到实际的代码中运行:
 
 HTML:
-```
+```html
 <div id="root">
     <p id="example" v-bind:class="{active:isActive}">
         v-bind:class语法示例
@@ -47,7 +47,7 @@ HTML:
 </div>
 ```
 JavaScript:
-```
+```javascript
 new Vue({
     el: '#root',
     data: {
@@ -68,7 +68,7 @@ __图片:使用class绑定后的DOM结构:__
 **注意**:如果元素上之前就有类名,那么Vue是不会修改元素的默认类名的.
 
 HTML:
-```
+```html
 <div id="root">
     <p id="example" class="default"  v-bind:class="{active:isActive,info:hasInfo}">
         v-bind:class语法示例
@@ -76,7 +76,7 @@ HTML:
 </div>
 ```
 JavaScript:
-```
+```javascript
 new Vue({
     el: '#root',
     data: {
@@ -100,7 +100,7 @@ __图片:多个Class和默认类名DOM结构:__
 现在我们来改写上面的例子:
 
 HTML:
-```
+```html
 <div id="root">
     <p id="example" class="default"  v-bind:class="myClass">
         v-bind:class语法示例
@@ -108,7 +108,7 @@ HTML:
 </div>
 ```
 JavaScript:
-```
+```javascript
 new Vue({
     el: '#root',
     data: {
@@ -127,18 +127,18 @@ new Vue({
 > 我们可以把一个数组传给 v-bind:class，以应用一个 class 列表：
 
 HTML:
-```
+```html
 <div v-bind:class="[activeClass, errorClass]"></div>
 ```
 JavaScript:
-```
+```javascript
 data: {
   activeClass: 'active',
   errorClass: 'text-danger'
 }
 ```
 输出:
-```
+```html
 <div class="active text-danger"></div>
 ```
 
@@ -153,7 +153,7 @@ data: {
 例子:
 
 HTML:
-```
+```html
 <div id="root">
     <p v-bind:style="{color:'#000',fontSize:fz+'px'}">
         v-bind:style语法示例
@@ -161,7 +161,7 @@ HTML:
 </div>
 ```
 JavaScript:
-```
+```javascript
 new Vue({
     el: '#root',
     data: {
@@ -185,7 +185,7 @@ __图片:使用v-bind后上例的DOM结构:__
 
 > v-bind:style 的数组语法可以将多个样式对象应用到同一个元素上：
 
-```
+```html
 <div v-bind:style="[baseStyles, overridingStyles]"></div>
 ``` 
 
@@ -199,7 +199,7 @@ __图片:使用v-bind后上例的DOM结构:__
 
 > 从 2.3.0 起你可以为 style 绑定中的属性提供一个包含多个值的数组，常用于提供多个带前缀的值，例如：
 
-```
+```html
 <div :style="{ display: ['-webkit-box', '-ms-flexbox', 'flex'] }"></div>
 ```
 

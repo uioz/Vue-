@@ -13,7 +13,7 @@ Vue在实际开发和部署都有极其复杂的环境配置.
 但是对于学习来说我们只需要使用一个简单的`<script>`标签就可以了.
 
 例如:
-```
+```html
 <script src="vue.js" ></script>
 ```
 
@@ -39,13 +39,13 @@ vue一旦插入网页中后就自动向全局注册了vue变量或者叫window�
  - `(1)` 所谓的声明式渲染指的就是以显式的声明来告诉Vue具体数据是如何输出的过程
 
 HTML:
-```
+```html
 <div id="app">
   {{ message }}
 </div>
 ```
 JavaScript:
-```
+```javascript
 var app = new Vue({ // 新建一个Vue实例
   el: '#app', // 告诉Vue的作用范围在 id为root这个元素内,root元素之外的依然是普通的html
   data: {
@@ -79,7 +79,7 @@ Hello world!
 Vue中data上挂载的所有的属性都会被添加到Vue实例上.
 
 也就是说如下的代码判断是正确的:
-```
+```javascript
 var app = new Vue({
   el: 'app',
   data: {
@@ -97,7 +97,7 @@ app.message === app.data.message // true
 __除了使用`{{ any }}`的方式用于输出文本,我们还可以修改其他的部分,下面的例子我们动态的修改了元素的`title`属性.__
 
 HTML:
-```
+```html
 <div id="app-2">
   <span v-bind:title="message">
     鼠标悬停几秒钟查看此处动态绑定的提示信息！
@@ -105,7 +105,7 @@ HTML:
 </div>
 ```
 JavaScript:
-```
+```javascript
 var app2 = new Vue({
   el: '#app-2',
   data: {
@@ -131,13 +131,13 @@ __官方这节的解释:__
 > 控制切换一个元素是否显示也相当简单：
 
 HTML:
-```
+```html
 <div id="app-3">
   <p v-if="seen">现在你看到我了</p>
 </div>
 ```
 JavaScipt:
-```
+```javascript
 var app3 = new Vue({
   el: '#app-3',
   data: {
@@ -160,7 +160,7 @@ __图片:控制台输入内容.__
  - `(1)` 实际上就是数组
 
 HTML:
-```
+```html
 <div id="app-4">
   <ol>
     <li v-for="todo in todos">
@@ -170,7 +170,7 @@ HTML:
 </div>
 ```
 JavaScript:
-```
+```javascript
 var app4 = new Vue({
   el: '#app-4',
   data: {
@@ -201,14 +201,14 @@ __图片:控制台数组添加内容.__
 > 为了让用户和你的应用进行交互，我们可以用 v-on 指令添加一个事件监听器，通过它调用在 Vue 实例中定义的方法：
 
 HTML:
-```
+```html
 <div id="app-5">
   <p>{{ message }}</p>
   <button v-on:click="reverseMessage">逆转消息</button> // v-on后面跟随的是标准的DOM事件名称,点击事件的标准名称为click
 </div>
 ```
 JavaScript:
-```
+```javascript
 var app5 = new Vue({
   el: '#app-5',
   data: {
@@ -236,7 +236,7 @@ __图片:点击按钮后的样子:__
 ### Vue中的this
 
 Vue的this指的就是Vue实例本身,上面的例子方法还可以做如下的判断:
-```
+```javascript
 reverseMessage: function () {
     console.log(this === app5); // true
     console.log(this.message === app5.message); // true
@@ -251,14 +251,14 @@ reverseMessage: function () {
  - `(1)` 之前的例子中我们做的绑定都是单向绑定,也就是说Vue实例的数据变化会在HTML模板中展现出来,而双向绑定多了在HTML模板中的变化会影响到Vue实例中的数据.
 
 HTML:
-```
+```html
 <div id="app-6">
   <p>{{ message }}</p>
   <input v-model="message">
 </div>
 ```
 JavaScript:
-```
+```javascript
 var app6 = new Vue({
   el: '#app-6',
   data: {
@@ -303,14 +303,14 @@ __图片:组件的基础概念:__
 这里例子中举了一个简单例子来使用Vue的组件.但是不用担心组件在这章中不是重点内容.
 
 > 在 Vue 里，一个组件本质上是一个拥有预定义选项的一个 Vue 实例。在 Vue 中注册组件很简单：
-```
+```javascript
 // 定义名为 todo-item 的新组件
 Vue.component('todo-item', {
   template: '<li>这是个待办项</li>' // 组件的特性 template 属性
 })
 ```
 > 现在你可以用它构建另一个组件模板：
-```
+```html
 <ol>
   <!-- 创建一个 todo-item 组件的实例 -->
   <todo-item></todo-item>
@@ -320,7 +320,7 @@ Vue.component('todo-item', {
 
  - `(1)` 简单的理解 prop中的内容类似于定义函数中的参数
 
-```
+```javascript
 Vue.component('todo-item', {
   // todo-item 组件现在接受一个
   // "prop"，类似于一个自定义特性。
@@ -331,7 +331,7 @@ Vue.component('todo-item', {
 ```
 > 现在，我们可以使用 v-bind 指令将待办项传到循环输出的每个组件中：
 完整的HTML部分:
-```
+```html
 <div id="app-7">
   <ol>
     <!--
@@ -349,7 +349,7 @@ Vue.component('todo-item', {
 </div>
 ```
 完整的JavaScript部分:
-```
+```javascript
 Vue.component('todo-item', {
   props: ['todo'],
   template: '<li>{{ todo.text }}</li>'
@@ -373,7 +373,7 @@ __图片:输出:__
 
 > 在一个大型应用中，有必要将整个应用程序划分为组件，以使开发更易管理。在后续教程中我们将详述组件，不过这里有一个 (假想的) 例子，以展示使用了组件的应用模板是什么样的：
 
-```
+```html
 <div id="app">
   <app-nav></app-nav>
   <app-view>
