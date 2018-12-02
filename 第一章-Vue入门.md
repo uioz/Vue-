@@ -183,7 +183,7 @@ var app4 = new Vue({
 })
 ```
 __图片:输出.__  
-![iamge text](./Assets/cheaper1-列表输出.jpg)
+![iamge text](./Assets/chapter1-列表输出.jpg)
 
 **分析**:`v-for`指令会遍历指定列表中的所有内容,在本例中就是`todos`,在列表中有多少个元素就会执行多少次循环,每次循环中的内容会被临时存放到一个变量中本例中是`todo`,而`todo`中存放的是一个对象其`text`键上保存了我们需要的字符串,所以我们使用`todo.text`来获取具体的内容.
 
@@ -192,7 +192,7 @@ __图片:输出.__
  - `{1}` `array.push()`语法会将数组的末尾添加一个新的元素.
 
 __图片:控制台数组添加内容.__  
-![iamge text](./Assets/cheaper1-列表控制台输入.jpg)
+![iamge text](./Assets/chapter1-列表控制台输入.jpg)
 
 ## 处理用户输入
 
@@ -222,10 +222,10 @@ var app5 = new Vue({
 })
 ```
 __图片:没有点击按钮时候的样子:__  
-![iamge text](./Assets/cheaper1-事件按钮未点击.jpg)
+![iamge text](./Assets/chapter1-事件按钮未点击.jpg)
 
 __图片:点击按钮后的样子:__  
-![iamge text](./Assets/cheaper1-事件按钮点击.jpg)
+![iamge text](./Assets/chapter1-事件按钮点击.jpg)
 
  - `{1}` `message.split('').reverse().join('')`执行步骤为: 将字符串转为字符串序列(数组)->将数组每一项反转->将数组合并为字符串.
 
@@ -267,10 +267,10 @@ var app6 = new Vue({
 })
 ```
 __图片:未输入内容的效果.__  
-![image text](Assets/cheaper1-v-modle未使用.jpg)
+![image text](Assets/chapter1-v-modle未使用.jpg)
 
 __图片:输入内容的效果.__  
-![image text](Assets/cheaper1-v-modle使用.jpg)
+![image text](Assets/chapter1-v-modle使用.jpg)
 
 
 ## 组件化应用构建
@@ -367,7 +367,7 @@ var app7 = new Vue({
 })
 ```
 __图片:输出:__  
-![image text](Assets/cheaper1-组件输出.jpg)
+![image text](Assets/chapter1-组件输出.jpg)
 
 > 尽管这只是一个刻意设计的例子，但是我们已经设法将应用分割成了两个更小的单元。子单元通过 prop 接口与父单元进行了良好的解耦。我们现在可以进一步改进 <todo-item> 组件，提供更为复杂的模板和逻辑，而不会影响到父单元。
 

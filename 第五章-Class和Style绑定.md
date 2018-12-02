@@ -57,10 +57,10 @@ new Vue({
 ```
 
 __图片:使用class绑定后的效果:__  
-![image text](Assets/cheaper-5-class绑定.jpg)
+![image text](Assets/chapter-5-class绑定.jpg)
 
 __图片:使用class绑定后的DOM结构:__  
-![image text](Assets/cheaper-5-class绑定DOM.jpg)
+![image text](Assets/chapter-5-class绑定DOM.jpg)
 
 
 ### 多个类名切换的示例
@@ -87,10 +87,10 @@ new Vue({
 ```
 
 __图片:多个class的效果:__  
-![image text](Assets/cheaper-5-多class.jpg)
+![image text](Assets/chapter-5-多class.jpg)
 
 __图片:多个Class和默认类名DOM结构:__  
-![image text](Assets/cheaper-5-多classDOM.jpg)
+![image text](Assets/chapter-5-多classDOM.jpg)
 
 
 ### 将class绑定的对象移动到Vue实例中
@@ -177,7 +177,7 @@ new Vue({
 | fontSize | font-size | fz+'px'     | 20px  |
 
 __图片:使用v-bind后上例的DOM结构:__  
-![image text](Assets/cheaper-5-styleDOM.jpg)
+![image text](Assets/chapter-5-styleDOM.jpg)
 
 ## 数组语法
 
