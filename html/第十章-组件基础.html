@@ -264,7 +264,21 @@ pre.hljs code > div {
 <style>
 /*
 
-Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+Atom One Light by Daniel Gamage
+Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+base:    #fafafa
+mono-1:  #383a42
+mono-2:  #686b77
+mono-3:  #a0a1a7
+hue-1:   #0184bb
+hue-2:   #4078f2
+hue-3:   #a626a4
+hue-4:   #50a14f
+hue-5:   #e45649
+hue-5-2: #c91243
+hue-6:   #986801
+hue-6-2: #c18401
 
 */
 
@@ -272,78 +286,77 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #23241f;
+  color: #383a42;
+  background: #fafafa;
 }
 
-.hljs,
-.hljs-tag,
-.hljs-subst {
-  color: #f8f8f2;
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic;
 }
 
-.hljs-strong,
-.hljs-emphasis {
-  color: #a8a8a2;
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4;
 }
 
-.hljs-bullet,
-.hljs-quote,
-.hljs-number,
-.hljs-regexp,
-.hljs-literal,
-.hljs-link {
-  color: #ae81ff;
-}
-
-.hljs-code,
-.hljs-title,
 .hljs-section,
-.hljs-selector-class {
-  color: #a6e22e;
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649;
 }
 
-.hljs-strong {
-  font-weight: bold;
+.hljs-literal {
+  color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #50a14f;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #c18401;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2;
 }
 
 .hljs-emphasis {
   font-style: italic;
 }
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-name,
-.hljs-attr {
-  color: #f92672;
+.hljs-strong {
+  font-weight: bold;
 }
 
-.hljs-symbol,
-.hljs-attribute {
-  color: #66d9ef;
-}
-
-.hljs-params,
-.hljs-class .hljs-title {
-  color: #f8f8f2;
-}
-
-.hljs-string,
-.hljs-type,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-selector-id,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-addition,
-.hljs-variable,
-.hljs-template-variable {
-  color: #e6db74;
-}
-
-.hljs-comment,
-.hljs-deletion,
-.hljs-meta {
-  color: #75715e;
+.hljs-link {
+  text-decoration: underline;
 }
 
 </style>
@@ -397,10 +410,10 @@ blockquote {
 </head>
 <body>
 <h1 id="%E7%AE%80%E4%BB%8B">简介</h1>
-<p>组件(Component)可谓是Vue最核心的功能在目前流行的三天Web框架中<code>Vue</code>,<code>AngularJS</code>,<code>React</code>中都有他的身影.</p>
+<p>组件(Component)可谓是Vue最核心的功能在目前流行的三大主流Web框架中<code>Vue</code>,<code>AngularJS</code>,<code>React</code>中都有他的身影.</p>
 <p>组件就是Vue实例只不过在参数选项上稍有不同,因为侧重点不同,Vue实例侧重于功能,而组件侧重于复用性.</p>
-<p>使用Vue书写一张或者一部分页面,不可能不使用组件,所以说<strong>组件是必知必会的部分</strong>.</p>
-<p>在了解了学习组件的重要性后,我们回顾在第一章中组件入门的一张中官网文档中对组件的解释:</p>
+<p>使用Vue编写一张或者部分HTML页面,不可能不使用组件,所以说<strong>组件是必知必会的部分</strong>.</p>
+<p>在了解了学习组件的重要性后,我们回顾在第一章中组件入门的一节中官网文档中对组件的描述:</p>
 <blockquote>
 <p>组件系统是 Vue 的另一个重要概念，因为它是一种抽象，允许我们使用小型、独立和通常可复用的组件构建大型应用。仔细想想，几乎任意类型的应用界面都可以抽象为一个组件树.</p>
 </blockquote>
@@ -415,20 +428,20 @@ blockquote {
 <li>向元素传递的字符参数为什么会在按钮上显示?</li>
 <li>为什么会有点击事件(对于button不明显),如果是一个<code>&lt;audio&gt;</code>元素为什么会有<code>play</code>事件?</li>
 </ul>
-<p>实际上带有默认功能和样式的HTML元素并不是操作系统填入的东西,而是浏览器自身就有的而且他们也是使用:</p>
+<p>实际上带有默认功能和样式的HTML元素并不是操作系统填入的东西,而是浏览器中的默认元素也是有以下技术创建的:</p>
 <ul>
 <li>HTML</li>
 <li>Css</li>
 <li>JavaScript</li>
 </ul>
-<p>写出来的只不过是隐藏了他们的具体结构,他们被定义为了浏览器的自带元素,这类元素被称为<code>shadow element</code>.</p>
-<p>在<code>chrome v71</code>中我添加了一个<code>&lt;video&gt;</code>元素,然后再开发者控制台中设置运行该元素的<code>shadow</code>部分可见:</p>
+<p>浏览器的只不过是隐藏了他们的具体结构,这类元素被称为<code>shadow element</code>.</p>
+<p>在<code>chrome v71</code>中我添加了一个<code>&lt;video&gt;</code>元素,然后在开发者控制台中设置允许<code>shadow element</code>的部分可见:</p>
 <p><strong>图片:空的video元素在页面中的效果:</strong><br>
 <img src="Assets/chapter-10-example1.jpg" alt="image text"></p>
 <p><strong>图片:空的video元素的背后的HTML结构:</strong><br>
 <img src="Assets/chapter-10-example2.jpg" alt="image text"></p>
 <p><code>&lt;video&gt;</code>和<code>&lt;button&gt;</code>在背后做了很多工作,但是在我们使用它的时候仅仅写几个单词就可以使用了,这就是<strong>浏览器原生的组件的概念.</strong></p>
-<p>Vue组件的基本概念就是:允许你利用它的强大特性在Vue的作用范围内定义一个你的HTML标签,这个标签拥有它自己的功能,一旦这个组件被定义好功能,继续使用组件就在使用一个HTML标签.这样带来的好处就是<strong>复用性</strong>我们可以多次的使用这个标签而不用去修改代码.</p>
+<p><strong>Vue组件的基本概念就是:允许你利用它的强大特性在Vue的作用范围内定义一个你的HTML标签,这个标签拥有它自己的功能,一旦这个组件被定义好功能,继续使用组件就在使用一个HTML标签.这样带来的好处就是<strong>复用性</strong>我们可以多次的使用这个标签而不用去修改代码.</strong></p>
 <h1 id="%E5%9F%BA%E6%9C%AC%E7%A4%BA%E4%BE%8B">基本示例</h1>
 <p>注册一个组件和创建一个Vue实例十分相似:</p>
 <pre class="hljs"><code><div><span class="hljs-comment">// 定义一个名为 button-counter 的新组件</span>
@@ -443,10 +456,10 @@ Vue.component(<span class="hljs-string">'button-counter'</span>, {
 </div></code></pre>
 <p>对比新建一个Vue实例,创建一个Vue组件有如下的不同:</p>
 <ul>
-<li>使用Vue.component()创建</li>
-<li>没有el选项</li>
-<li>data不在是一个对象字面量而是一个函数返回一个对象字面量</li>
-<li>多了一个template选项内部填充的是HTML字符串</li>
+<li>使用<code>Vue.component()</code>创建</li>
+<li>没有<code>el</code>选项</li>
+<li><code>data</code>不在是一个对象字面量而是一个函数返回一个对象字面量</li>
+<li>多了一个<code>template</code>选项内部填充的是HTML字符串</li>
 </ul>
 <blockquote>
 <p><strong>组件是可复用的 Vue 实例</strong>，且带有一个名字：在这个例子中是 <button-counter>。我们可以在一个通过 new Vue 创建的 Vue 根实例中，把这个组件作为自定义元素来使用：</p>
@@ -508,7 +521,7 @@ Vue.component(<span class="hljs-string">'button-counter'</span>, {
 })
 </div></code></pre>
 <p>都会有一个<code>template</code>属性<code>template</code>有很多种用法,无论那种用法都是用于告诉组件处理HTML内容的范围.</p>
-<p><strong>注意</strong>:<code>template</code>对于的HTML只能有一个根元素,也就是说:</p>
+<p><strong>注意</strong>:<code>template</code>对于的HTML只能有一个根(root)元素,也就是说:</p>
 <p>这个是可以的:</p>
 <pre class="hljs"><code><div>template: '&lt;button&gt;一个按钮&lt;/button&gt;'
 </div></code></pre>
@@ -556,7 +569,7 @@ Vue.component(<span class="hljs-string">'button-counter'</span>, {
 </ul>
 </li>
 </ul>
-<p>如果上述的所有内容都是组件的话,现在它们还不够完善:</p>
+<p>如果上述的所有内容都是组件的话那么他们构成了一个有父子关系的组件树,现在它们还不够完善:</p>
 <ol>
 <li>没有被挂载到Vue实例</li>
 <li>还不够细化,还可以更加细化</li>

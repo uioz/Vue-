@@ -264,7 +264,21 @@ pre.hljs code > div {
 <style>
 /*
 
-Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+Atom One Light by Daniel Gamage
+Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+base:    #fafafa
+mono-1:  #383a42
+mono-2:  #686b77
+mono-3:  #a0a1a7
+hue-1:   #0184bb
+hue-2:   #4078f2
+hue-3:   #a626a4
+hue-4:   #50a14f
+hue-5:   #e45649
+hue-5-2: #c91243
+hue-6:   #986801
+hue-6-2: #c18401
 
 */
 
@@ -272,78 +286,77 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #23241f;
+  color: #383a42;
+  background: #fafafa;
 }
 
-.hljs,
-.hljs-tag,
-.hljs-subst {
-  color: #f8f8f2;
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic;
 }
 
-.hljs-strong,
-.hljs-emphasis {
-  color: #a8a8a2;
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4;
 }
 
-.hljs-bullet,
-.hljs-quote,
-.hljs-number,
-.hljs-regexp,
-.hljs-literal,
-.hljs-link {
-  color: #ae81ff;
-}
-
-.hljs-code,
-.hljs-title,
 .hljs-section,
-.hljs-selector-class {
-  color: #a6e22e;
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649;
 }
 
-.hljs-strong {
-  font-weight: bold;
+.hljs-literal {
+  color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #50a14f;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #c18401;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2;
 }
 
 .hljs-emphasis {
   font-style: italic;
 }
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-name,
-.hljs-attr {
-  color: #f92672;
+.hljs-strong {
+  font-weight: bold;
 }
 
-.hljs-symbol,
-.hljs-attribute {
-  color: #66d9ef;
-}
-
-.hljs-params,
-.hljs-class .hljs-title {
-  color: #f8f8f2;
-}
-
-.hljs-string,
-.hljs-type,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-selector-id,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-addition,
-.hljs-variable,
-.hljs-template-variable {
-  color: #e6db74;
-}
-
-.hljs-comment,
-.hljs-deletion,
-.hljs-meta {
-  color: #75715e;
+.hljs-link {
+  text-decoration: underline;
 }
 
 </style>
@@ -398,13 +411,12 @@ blockquote {
 <body>
 <h1 id="%E5%AD%A6%E4%B9%A0vue%E9%87%8D%E8%A6%81%E5%90%97">学习Vue重要吗</h1>
 <p>对于一位学生来说学习Vue实际上并不太重要相对于学习Web的其他部分来说.</p>
-<p>在我看来想要学好并且从事Web开发,没有一个良好的基础是不不行的,实际上基础的高低会明显的体现在面试的通过率上(笑).</p>
+<p>在我看来想要学好并且从事Web开发,没有一个良好的基础是不行的,实际上基础的高低会明显的体现在面试的通过率上😋.</p>
 <h1 id="%E4%BA%86%E8%A7%A3vue%E9%87%8D%E8%A6%81%E5%90%97">了解Vue重要吗</h1>
 <p>如果要我设置一个学习优先级应该为他设置一个中等的优先级.</p>
 <p>Vue和其他的三大框架都十分流行,实际在开发中使用也是家常便饭.</p>
 <p>但是了解Vue以及其余主流框架背后的思想还是很重要的.</p>
 <h1 id="%E6%8B%93%E5%B1%95vue">拓展Vue</h1>
-<p>如果你看完了十章的内容,我觉得你完全可以去打开Vue官方文档去学习一下,本文章就是参照官网文档的基础入门部分而写的.</p>
 <p>所以如果你想继续学习,我的建议是打开官网的Vue基础部分再去学习一遍(官网文档和本文还是有很大区别的).</p>
 <p>如果阅读官网文档没有问题后,建议直接学习官网文档即可,实际上要精通Vue很容易,实际上精通的不是Vue而是整个Web开发,还是那句老话,如果你的基础不错你会发现学习Vue还是很容易的.</p>
 <p>Vue有一个很大的生态圈,想要进入这个圈子可不容易.总的来说你得会如下的技能:</p>
@@ -420,8 +432,12 @@ blockquote {
 <li>es6</li>
 <li>es7</li>
 <li>vue-cli 以上全会后可使用</li>
+<li>iview</li>
+<li>element ui</li>
+<li>weex</li>
+<li>... 各种框架</li>
 </ul>
-<p>学习以上的任何一个东西都不会比Vue本身容易,例如nodeJs的文档是A-Z进行排序的学习起来有你苦头吃的(滑稽).</p>
+<p>学习以上的任何一个东西都不会比Vue本身容易,例如nodeJs的文档是A-Z进行排序的学习起来有你苦头吃的😂.</p>
 
 </body>
 </html>

@@ -264,7 +264,21 @@ pre.hljs code > div {
 <style>
 /*
 
-Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+Atom One Light by Daniel Gamage
+Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+base:    #fafafa
+mono-1:  #383a42
+mono-2:  #686b77
+mono-3:  #a0a1a7
+hue-1:   #0184bb
+hue-2:   #4078f2
+hue-3:   #a626a4
+hue-4:   #50a14f
+hue-5:   #e45649
+hue-5-2: #c91243
+hue-6:   #986801
+hue-6-2: #c18401
 
 */
 
@@ -272,78 +286,77 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #23241f;
+  color: #383a42;
+  background: #fafafa;
 }
 
-.hljs,
-.hljs-tag,
-.hljs-subst {
-  color: #f8f8f2;
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic;
 }
 
-.hljs-strong,
-.hljs-emphasis {
-  color: #a8a8a2;
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4;
 }
 
-.hljs-bullet,
-.hljs-quote,
-.hljs-number,
-.hljs-regexp,
-.hljs-literal,
-.hljs-link {
-  color: #ae81ff;
-}
-
-.hljs-code,
-.hljs-title,
 .hljs-section,
-.hljs-selector-class {
-  color: #a6e22e;
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649;
 }
 
-.hljs-strong {
-  font-weight: bold;
+.hljs-literal {
+  color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #50a14f;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #c18401;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2;
 }
 
 .hljs-emphasis {
   font-style: italic;
 }
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-name,
-.hljs-attr {
-  color: #f92672;
+.hljs-strong {
+  font-weight: bold;
 }
 
-.hljs-symbol,
-.hljs-attribute {
-  color: #66d9ef;
-}
-
-.hljs-params,
-.hljs-class .hljs-title {
-  color: #f8f8f2;
-}
-
-.hljs-string,
-.hljs-type,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-selector-id,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-addition,
-.hljs-variable,
-.hljs-template-variable {
-  color: #e6db74;
-}
-
-.hljs-comment,
-.hljs-deletion,
-.hljs-meta {
-  color: #75715e;
+.hljs-link {
+  text-decoration: underline;
 }
 
 </style>
@@ -668,7 +681,7 @@ vm.selected.number <span class="hljs-comment">// =&gt; 123</span>
 <p>在默认情况下，<code>v-model</code> 在每次 <code>input</code> 事件触发后将输入框的值与数据进行同步 (除了上述输入法组合文字时)。你可以添加 <code>lazy</code> 修饰符，从而转变为使用 <code>change</code> 事件进行同步.<code>{1}</code></p>
 </blockquote>
 <ul>
-<li><code>{1}</code> 你需要了解JavaScript中<code>input</code>和<code>change</code>事件的区别,简单的来说使用这个修饰符后<code>v-modle</code>绑定数据的获取只有在数据被彻底改变后才会改变.例如在输入框中输入完成内容后再空白区域点击左键,会被视为<code>change</code>事件.</li>
+<li><code>{1}</code> 你需要了解JavaScript中<code>input</code>和<code>change</code>事件的区别,简单的来说使用这个修饰符后<code>v-modle</code>绑定数据的获取只有在数据被彻底改变后才会改变.例如在输入框中输入完成内容后在空白区域点击左键,会被视为<code>change</code>事件.</li>
 </ul>
 <pre class="hljs"><code><div><span class="hljs-comment">&lt;!-- 在“change”时而非“input”时更新 --&gt;</span>
 <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-model.lazy</span>=<span class="hljs-string">"msg"</span> &gt;</span>

@@ -264,7 +264,21 @@ pre.hljs code > div {
 <style>
 /*
 
-Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+Atom One Light by Daniel Gamage
+Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+base:    #fafafa
+mono-1:  #383a42
+mono-2:  #686b77
+mono-3:  #a0a1a7
+hue-1:   #0184bb
+hue-2:   #4078f2
+hue-3:   #a626a4
+hue-4:   #50a14f
+hue-5:   #e45649
+hue-5-2: #c91243
+hue-6:   #986801
+hue-6-2: #c18401
 
 */
 
@@ -272,78 +286,77 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #23241f;
+  color: #383a42;
+  background: #fafafa;
 }
 
-.hljs,
-.hljs-tag,
-.hljs-subst {
-  color: #f8f8f2;
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic;
 }
 
-.hljs-strong,
-.hljs-emphasis {
-  color: #a8a8a2;
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4;
 }
 
-.hljs-bullet,
-.hljs-quote,
-.hljs-number,
-.hljs-regexp,
-.hljs-literal,
-.hljs-link {
-  color: #ae81ff;
-}
-
-.hljs-code,
-.hljs-title,
 .hljs-section,
-.hljs-selector-class {
-  color: #a6e22e;
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649;
 }
 
-.hljs-strong {
-  font-weight: bold;
+.hljs-literal {
+  color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #50a14f;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #c18401;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2;
 }
 
 .hljs-emphasis {
   font-style: italic;
 }
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-name,
-.hljs-attr {
-  color: #f92672;
+.hljs-strong {
+  font-weight: bold;
 }
 
-.hljs-symbol,
-.hljs-attribute {
-  color: #66d9ef;
-}
-
-.hljs-params,
-.hljs-class .hljs-title {
-  color: #f8f8f2;
-}
-
-.hljs-string,
-.hljs-type,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-selector-id,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-addition,
-.hljs-variable,
-.hljs-template-variable {
-  color: #e6db74;
-}
-
-.hljs-comment,
-.hljs-deletion,
-.hljs-meta {
-  color: #75715e;
+.hljs-link {
+  text-decoration: underline;
 }
 
 </style>
@@ -397,8 +410,8 @@ blockquote {
 </head>
 <body>
 <h1 id="%E7%AE%80%E4%BB%8B">简介</h1>
-<p>本章主要的内容是将利用Vue的数据绑定的功能也就是<code>v-bind</code>如何处理<code>class</code>和<code>style</code>属性.</p>
-<p>HTML的所有元素上的属性都可以使用<code>v-bind</code>的指令进行处理,其中<code>class</code>和<code>style</code>最为特殊,因为他们涉及到了最基础的样式操作.</p>
+<p>在本章主要介绍如何利用Vue的数据绑定的功能也就是<code>v-bind</code>处理<code>class</code>和<code>style</code>属性.</p>
+<p>HTML的所有元素上的属性都可以使用<code>v-bind</code>的指令进行处理,其中<code>class</code>和<code>style</code>最为特殊,因为他们涉及到了最基础的样式操作,所以Vue对于添加了更加强大的功能.</p>
 <p><strong>注意</strong>:下面的例子默认会包含如下的样式:</p>
 <pre class="hljs"><code><div><span class="hljs-selector-id">#example</span>{
     <span class="hljs-attribute">height</span>:<span class="hljs-number">100px</span>;
@@ -427,7 +440,7 @@ blockquote {
 <thead>
 <tr>
 <th>要动态添加的类名</th>
-<th>布尔判断是否为true</th>
+<th>如果布尔运算为true则添加这个类名</th>
 </tr>
 </thead>
 <tbody>
@@ -517,7 +530,10 @@ blockquote {
 <p>输出:</p>
 <pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"active text-danger"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 </div></code></pre>
-<h1 id="%E7%BB%91%E5%AE%9A%E5%86%85%E8%81%94%E6%A0%B7%E5%BC%8F">绑定内联样式</h1>
+<h1 id="%E7%BB%91%E5%AE%9A%E5%86%85%E8%81%94%E6%A0%B7%E5%BC%8F1">绑定内联样式<code>{1}</code></h1>
+<ul>
+<li>指的是以HTML元素的<code>style</code>属性编写的css样式</li>
+</ul>
 <h2 id="%E5%AF%B9%E8%B1%A1%E8%AF%AD%E6%B3%95">对象语法</h2>
 <blockquote>
 <p>v-bind:style 的对象语法十分直观——看着非常像 CSS，但其实是一个 JavaScript 对象。CSS 属性名可以用驼峰式 (camelCase) 或短横线分隔 (kebab-case，记得用单引号括起来) 来命名<code>{1}</code>：</p>
@@ -569,7 +585,8 @@ blockquote {
 <p><strong>图片:使用v-bind后上例的DOM结构:</strong><br>
 <img src="Assets/chapter-5-styleDOM.jpg" alt="image text"></p>
 <h2 id="%E6%95%B0%E7%BB%84%E8%AF%AD%E6%B3%95">数组语法</h2>
-<p>同<strong>class绑定</strong>中的数组语法,此处只提供官方文档中的例子.</p>
+<p>和<strong>class绑定</strong>中的数组语法相同.</p>
+<p>故此处只提供官方文档中的例子.</p>
 <blockquote>
 <p>v-bind:style 的数组语法可以将多个样式对象应用到同一个元素上：</p>
 </blockquote>
@@ -579,8 +596,7 @@ blockquote {
 <blockquote>
 <p>当 v-bind:style 使用需要添加浏览器引擎前缀的 CSS 属性时，如 transform，Vue.js 会自动侦测并添加相应的前缀。</p>
 </blockquote>
-<h2 id="%E5%A4%9A%E9%87%8D%E5%80%BC">多重值</h2>
-<p><strong>注意</strong>:需要Vue<code>v2.3.0+</code>.</p>
+<h2 id="%E5%A4%9A%E9%87%8D%E5%80%BCv230">多重值<code>v2.3.0+</code></h2>
 <blockquote>
 <p>从 2.3.0 起你可以为 style 绑定中的属性提供一个包含多个值的数组，常用于提供多个带前缀的值，例如：</p>
 </blockquote>

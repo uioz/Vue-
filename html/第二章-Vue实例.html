@@ -264,7 +264,21 @@ pre.hljs code > div {
 <style>
 /*
 
-Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+Atom One Light by Daniel Gamage
+Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+base:    #fafafa
+mono-1:  #383a42
+mono-2:  #686b77
+mono-3:  #a0a1a7
+hue-1:   #0184bb
+hue-2:   #4078f2
+hue-3:   #a626a4
+hue-4:   #50a14f
+hue-5:   #e45649
+hue-5-2: #c91243
+hue-6:   #986801
+hue-6-2: #c18401
 
 */
 
@@ -272,78 +286,77 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #23241f;
+  color: #383a42;
+  background: #fafafa;
 }
 
-.hljs,
-.hljs-tag,
-.hljs-subst {
-  color: #f8f8f2;
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic;
 }
 
-.hljs-strong,
-.hljs-emphasis {
-  color: #a8a8a2;
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4;
 }
 
-.hljs-bullet,
-.hljs-quote,
-.hljs-number,
-.hljs-regexp,
-.hljs-literal,
-.hljs-link {
-  color: #ae81ff;
-}
-
-.hljs-code,
-.hljs-title,
 .hljs-section,
-.hljs-selector-class {
-  color: #a6e22e;
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649;
 }
 
-.hljs-strong {
-  font-weight: bold;
+.hljs-literal {
+  color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #50a14f;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #c18401;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2;
 }
 
 .hljs-emphasis {
   font-style: italic;
 }
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-name,
-.hljs-attr {
-  color: #f92672;
+.hljs-strong {
+  font-weight: bold;
 }
 
-.hljs-symbol,
-.hljs-attribute {
-  color: #66d9ef;
-}
-
-.hljs-params,
-.hljs-class .hljs-title {
-  color: #f8f8f2;
-}
-
-.hljs-string,
-.hljs-type,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-selector-id,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-addition,
-.hljs-variable,
-.hljs-template-variable {
-  color: #e6db74;
-}
-
-.hljs-comment,
-.hljs-deletion,
-.hljs-meta {
-  color: #75715e;
+.hljs-link {
+  text-decoration: underline;
 }
 
 </style>
@@ -497,16 +510,17 @@ vm.$watch(<span class="hljs-string">'a'</span>, <span class="hljs-function"><spa
 <blockquote>
 <p>下面展示了实例的生命周期。你不需要立马弄明白所有的东西，不过随着你的不断学习和使用，它的参考价值会越来越高。</p>
 </blockquote>
-<p>钩子函数一览表,按照触发顺序:</p>
+<p>常见生命周期钩子函数一览:</p>
 <ul>
-<li>beforeCreate Vue实例内部事件和生命周期初始化完成后触发</li>
-<li>create 响应式初始化完成后触发</li>
-<li>beforeMount 模板编译完成后触发</li>
-<li>mounted 追加到html中后触发</li>
-<li>beforeUpdate 数据改变后触发</li>
-<li>updated 视图被重新渲染后触发</li>
-<li>beforeDestroy 调用<code>$destroy()</code>方法后触发</li>
-<li>destroyed 内部子组件以监听器销毁后触发</li>
+<li>beforeCreate 在实例初始化之后，数据观测 <code>(data observer)</code> 和 <code>event/watcher</code> 事件配置之前被调用。</li>
+<li>create 在实例创建完成后被立即调用,数据观测和事件配置完成.</li>
+<li>beforeMount 在挂载(到HTML中)开始之前被调用：相关的<code>render</code>(渲染)函数首次被调用。</li>
+<li>mounted HTML部分替换完成后触发.</li>
+<li>beforeUpdate 数据更新时调用，发生在虚拟 DOM 打补丁之前。</li>
+<li>updated 由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子。</li>
+<li>beforeDestroy 实例销毁之前调用。在这一步，实例仍然完全可用。</li>
+<li>destroyed Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。</li>
+<li></li>
 </ul>
 
 </body>

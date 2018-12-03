@@ -264,7 +264,21 @@ pre.hljs code > div {
 <style>
 /*
 
-Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+Atom One Light by Daniel Gamage
+Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+base:    #fafafa
+mono-1:  #383a42
+mono-2:  #686b77
+mono-3:  #a0a1a7
+hue-1:   #0184bb
+hue-2:   #4078f2
+hue-3:   #a626a4
+hue-4:   #50a14f
+hue-5:   #e45649
+hue-5-2: #c91243
+hue-6:   #986801
+hue-6-2: #c18401
 
 */
 
@@ -272,78 +286,77 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #23241f;
+  color: #383a42;
+  background: #fafafa;
 }
 
-.hljs,
-.hljs-tag,
-.hljs-subst {
-  color: #f8f8f2;
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic;
 }
 
-.hljs-strong,
-.hljs-emphasis {
-  color: #a8a8a2;
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4;
 }
 
-.hljs-bullet,
-.hljs-quote,
-.hljs-number,
-.hljs-regexp,
-.hljs-literal,
-.hljs-link {
-  color: #ae81ff;
-}
-
-.hljs-code,
-.hljs-title,
 .hljs-section,
-.hljs-selector-class {
-  color: #a6e22e;
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649;
 }
 
-.hljs-strong {
-  font-weight: bold;
+.hljs-literal {
+  color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #50a14f;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #c18401;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2;
 }
 
 .hljs-emphasis {
   font-style: italic;
 }
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-name,
-.hljs-attr {
-  color: #f92672;
+.hljs-strong {
+  font-weight: bold;
 }
 
-.hljs-symbol,
-.hljs-attribute {
-  color: #66d9ef;
-}
-
-.hljs-params,
-.hljs-class .hljs-title {
-  color: #f8f8f2;
-}
-
-.hljs-string,
-.hljs-type,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-selector-id,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-addition,
-.hljs-variable,
-.hljs-template-variable {
-  color: #e6db74;
-}
-
-.hljs-comment,
-.hljs-deletion,
-.hljs-meta {
-  color: #75715e;
+.hljs-link {
+  text-decoration: underline;
 }
 
 </style>
@@ -397,7 +410,7 @@ blockquote {
 </head>
 <body>
 <h1 id="vue%E5%B0%8F%E4%B9%A6">Vue小书</h1>
-<p>Vue小书以Vue文档的基础部分的简化版本,皆在为前端编程基础差的同学准备的,虽然该书被定义为入门书籍但是也要求一定的基础.</p>
+<p>Vue小书以Vue文档的基础部分的简化版本,皆在为前端编程基础薄弱的同学准备的,虽然该书被定义为入门书籍但是不是零基础书籍.</p>
 <p>本书按照官方文档进行分章分节编写,依照官方文档修改主要做了如下几个微小的工作:</p>
 <ul>
 <li>为专有名词作注释(具体格式见后文)</li>
@@ -486,7 +499,7 @@ blockquote {
 <p>这是一行普通的文本样式.</p>
 <h1 id="%E6%9C%AC%E4%B9%A6vue%E7%9A%84%E5%BC%95%E5%85%A5%E6%96%B9%E5%BC%8F">本书Vue的引入方式</h1>
 <p>本书属于入门类型,Vue的实际使用和书中使用的方式有很大出入,可以说完全不一样.</p>
-<p>本书使用Vue的方式就是直接使用<code>script</code>标签进行引入Vue.</p>
+<p>本书使用Vue的方式就是直接使用<code>&lt;script&gt;</code>标签进行引入Vue.</p>
 <p>例如:</p>
 <pre class="hljs"><code><div>&lt;script src=&quot;vue.js&quot; type=&quot;text/javascript&quot; &gt;&lt;/script&gt;
 </div></code></pre>
@@ -495,7 +508,11 @@ blockquote {
 <blockquote>
 <p>https://cn.vuejs.org/v2/guide/</p>
 </blockquote>
-<h1 id="%E5%A3%B0%E6%98%8E">声明</h1>
+<h1 id="%E8%AE%B8%E5%8F%AF">许可</h1>
+<blockquote>
+<p><a href="./License/vue-License">Vue</a>
+<a href="https://vuejs.org/">主页</a></p>
+</blockquote>
 <p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/cn/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/2.5/cn/88x31.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/cn/">知识共享署名-非商业性使用-相同方式共享 2.5 中国大陆许可协议</a>进行许可。</p>
 
 </body>

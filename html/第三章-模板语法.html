@@ -264,7 +264,21 @@ pre.hljs code > div {
 <style>
 /*
 
-Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+Atom One Light by Daniel Gamage
+Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+base:    #fafafa
+mono-1:  #383a42
+mono-2:  #686b77
+mono-3:  #a0a1a7
+hue-1:   #0184bb
+hue-2:   #4078f2
+hue-3:   #a626a4
+hue-4:   #50a14f
+hue-5:   #e45649
+hue-5-2: #c91243
+hue-6:   #986801
+hue-6-2: #c18401
 
 */
 
@@ -272,78 +286,77 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #23241f;
+  color: #383a42;
+  background: #fafafa;
 }
 
-.hljs,
-.hljs-tag,
-.hljs-subst {
-  color: #f8f8f2;
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic;
 }
 
-.hljs-strong,
-.hljs-emphasis {
-  color: #a8a8a2;
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4;
 }
 
-.hljs-bullet,
-.hljs-quote,
-.hljs-number,
-.hljs-regexp,
-.hljs-literal,
-.hljs-link {
-  color: #ae81ff;
-}
-
-.hljs-code,
-.hljs-title,
 .hljs-section,
-.hljs-selector-class {
-  color: #a6e22e;
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649;
 }
 
-.hljs-strong {
-  font-weight: bold;
+.hljs-literal {
+  color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #50a14f;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #c18401;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2;
 }
 
 .hljs-emphasis {
   font-style: italic;
 }
 
-.hljs-keyword,
-.hljs-selector-tag,
-.hljs-name,
-.hljs-attr {
-  color: #f92672;
+.hljs-strong {
+  font-weight: bold;
 }
 
-.hljs-symbol,
-.hljs-attribute {
-  color: #66d9ef;
-}
-
-.hljs-params,
-.hljs-class .hljs-title {
-  color: #f8f8f2;
-}
-
-.hljs-string,
-.hljs-type,
-.hljs-built_in,
-.hljs-builtin-name,
-.hljs-selector-id,
-.hljs-selector-attr,
-.hljs-selector-pseudo,
-.hljs-addition,
-.hljs-variable,
-.hljs-template-variable {
-  color: #e6db74;
-}
-
-.hljs-comment,
-.hljs-deletion,
-.hljs-meta {
-  color: #75715e;
+.hljs-link {
+  text-decoration: underline;
 }
 
 </style>
@@ -417,7 +430,7 @@ blockquote {
 </blockquote>
 <h1 id="%E6%8F%92%E5%80%BC1">插值<code>(1)</code></h1>
 <ul>
-<li><code>(1)</code> 所谓的插值指的就是使用HTML中插入模板符号的这种行为,这种行为会将数据填充到插值处.</li>
+<li><code>(1)</code> 所谓的插值指的就是使用HTML中插入模板符号的这种行为,这种行为会将数据填充到该位置.</li>
 </ul>
 <h2 id="%E6%96%87%E6%9C%AC">文本</h2>
 <blockquote>
@@ -447,11 +460,11 @@ blockquote {
     {{ message }}
 <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
 </div></code></pre>
-<p>最后在HTML中实际输出也是字符串,而不是真正的HTML结构,简单的来说你不可以使用插值的语法来直接的添加或者修改实际的HTML结构.</p>
+<p>最后在HTML中实际输出也是字符串,而不是真正的HTML结构,简单的来说你<strong>不可以</strong>使用插值的语法来直接的添加或者修改实际的HTML结构.</p>
 <p><strong>图片:直接输出html字符串:</strong><br>
 <img src="Assets/chapter-3没有v-html.jpg" alt="image text"></p>
 <p><strong>如何做到?</strong></p>
-<p>做到这点需要使用<code>v-html</code>指令,该指令依附在html元素上,当获取到实际的HTML字符串这个字符串会被转为实际的DOM元素然后成为使用<code>v-html</code>的子元素,例如:
+<p>做到这点需要使用<code>v-html</code>指令,当获取到实际的HTML字符串这个字符串会被转为实际的DOM元素然后成为使用<code>v-html</code>指令元素的子元素,例如:
 HTML:</p>
 <pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span> &gt;</span>
     <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-html</span>=<span class="hljs-string">"message"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
@@ -530,13 +543,11 @@ HTML:</p>
 <p>一些指令能够接收一个“参数”，在指令名称之后以冒号表示。例如，v-bind 指令可以用于响应式地更新 HTML 特性<code>(1)</code>：</p>
 </blockquote>
 <ul>
-<li><code>(1)</code> 指的就是跟新HTML元素属性.</li>
+<li><code>(1)</code> 指的就是当实例数据变化时候即时更新HTML元素属性.</li>
 </ul>
 <pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">v-bind:href</span>=<span class="hljs-string">"url"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
 </div></code></pre>
-<blockquote>
-<p>在这里 <code>href</code> 是参数，告知 <code>v-bind</code> 指令将该元素的 <code>href</code> 特性与表达式 <code>url</code> 的值绑定。</p>
-</blockquote>
+<p>在这里 <code>href</code> 是参数，告知 <code>v-bind</code> 指令将该元素的 <code>href</code> 特性与表达式<code>url</code>的值绑定,这会让Vue去寻找内部的<code>url</code>属性如果不存在则会报错.</p>
 <blockquote>
 <p>另一个例子是 <code>v-on</code> 指令，它用于监听 <code>DOM</code> 事件：</p>
 </blockquote>
@@ -550,7 +561,7 @@ HTML:</p>
 <p>修饰符 (Modifiers) 是以半角句号 <code>.</code> 指明的特殊后缀，用于指出一个指令应该以特殊方式绑定。例如，<code>.prevent</code> 修饰符告诉 <code>v-on</code> 指令对于触发的事件调用 <code>event.preventDefault()</code> <code>{1}</code>：</p>
 </blockquote>
 <ul>
-<li><code>{1}</code> HTML中很多元素是有默认事件的,例如<code>&lt;a&gt;</code>元素点击后会进行跳转,如果不想执行默认的行为在传统的JavaScript中需要在事件回调中调用<code>event.preventDefault()</code>阻止这种行为.而在Vue中使用<code>v-on</code>来进行监听事件,使用<code>v-on.prevent</code>可以起到同样的效果.</li>
+<li><code>{1}</code> HTML中很多元素是有默认事件的,例如<code>&lt;a&gt;</code>元素点击后会进行跳转,如果不想执行默认的行为在传统的JavaScript中需要在事件回调中调用<code>event.preventDefault()</code>阻止这种行为.而在Vue中使用<code>v-on</code>来进行监听事件,使用<code>v-on:xxx.prevent</code>可以起到同样的效果.</li>
 </ul>
 <pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">v-on:submit.prevent</span>=<span class="hljs-string">"onSubmit"</span>&gt;</span>...<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
 </div></code></pre>
