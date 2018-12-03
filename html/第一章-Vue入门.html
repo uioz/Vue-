@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>第一章-Vue入门.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/*
+
+Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #23241f;
+}
+
+.hljs,
+.hljs-tag,
+.hljs-subst {
+  color: #f8f8f2;
+}
+
+.hljs-strong,
+.hljs-emphasis {
+  color: #a8a8a2;
+}
+
+.hljs-bullet,
+.hljs-quote,
+.hljs-number,
+.hljs-regexp,
+.hljs-literal,
+.hljs-link {
+  color: #ae81ff;
+}
+
+.hljs-code,
+.hljs-title,
+.hljs-section,
+.hljs-selector-class {
+  color: #a6e22e;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-name,
+.hljs-attr {
+  color: #f92672;
+}
+
+.hljs-symbol,
+.hljs-attribute {
+  color: #66d9ef;
+}
+
+.hljs-params,
+.hljs-class .hljs-title {
+  color: #f8f8f2;
+}
+
+.hljs-string,
+.hljs-type,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-selector-id,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-variable {
+  color: #e6db74;
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-meta {
+  color: #75715e;
+}
+
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h1 id="vuejs%E6%98%AF%E4%BB%80%E4%B9%88">Vue.js是什么</h1>
+<blockquote>
+<p>Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的渐进式<code>(1)</code>框架。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。</p>
+</blockquote>
+<ul>
+<li><code>(1)</code> 渐进式指的就是可以一点一点(软着陆)的使用,也可以理解为一点一点的学习.</li>
+</ul>
+<blockquote>
+<p>官方指南假设你已了解关于 HTML、CSS 和 JavaScript 的中级知识。如果你刚开始学习前端开发，将框架作为你的第一步可能不是最好的主意——掌握好基础知识再来吧！之前有其它框架的使用经验会有帮助，但这不是必需的。</p>
+</blockquote>
+<h1 id="%E5%AE%89%E8%A3%85">安装</h1>
+<p>Vue在实际开发和部署都有极其复杂的环境配置.</p>
+<p>但是对于学习来说我们只需要使用一个简单的<code>&lt;script&gt;</code>标签就可以了.</p>
+<p>例如:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"vue.js"</span> &gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</div></code></pre>
+<p>Vue的下载可以前往:</p>
+<blockquote>
+<p>https://cn.vuejs.org/v2/guide/installation.html</p>
+</blockquote>
+<h1 id="%E8%B5%B7%E6%AD%A5">起步</h1>
+<h2 id="%E4%BD%BF%E7%94%A8vue%E7%9A%84%E6%97%B6%E5%80%99%E6%88%91%E4%BB%AC%E5%85%B7%E4%BD%93%E5%9C%A8%E7%BC%96%E5%86%99%E4%BB%80%E4%B9%88">使用vue的时候我们具体在编写什么?</h2>
+<p>基本来说你需要编写两个部分:</p>
+<ul>
+<li>具有Vue语法的html部分 - 我们称之为HTML模板</li>
+<li>使用Vue框架的js部分 - 我们称之为Vue实例</li>
+</ul>
+<h2 id="%E5%BC%95%E5%85%A5%E5%90%8Evue%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88">引入后Vue做了什么</h2>
+<p>vue一旦插入网页中后就自动向全局注册了vue变量或者叫window下的属性比较好一些,自然类似于大部分工具例如jquery,实质上他是一个在全局挂载的函数而已.</p>
+<h2 id="%E5%A3%B0%E6%98%8E%E5%BC%8F%E6%B8%B2%E6%9F%931">声明式渲染(1)</h2>
+<blockquote>
+<p>Vue.js 的核心是一个允许采用简洁的模板语法<code>(1)</code>来声明式地将数据渲染进 DOM 的系统：</p>
+</blockquote>
+<ul>
+<li><code>(1)</code> 所谓的声明式渲染指的就是以显式的声明来告诉Vue具体数据是如何输出的过程</li>
+</ul>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span>
+  {{ message }}
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> app = <span class="hljs-keyword">new</span> Vue({ <span class="hljs-comment">// 新建一个Vue实例</span>
+  el: <span class="hljs-string">'#app'</span>, <span class="hljs-comment">// 告诉Vue的作用范围在 id为root这个元素内,root元素之外的依然是普通的html</span>
+  data: {
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Hello Vue!'</span> <span class="hljs-comment">// data 对象中存放的数据可以在HTML模板中输出</span>
+  }
+})
+</div></code></pre>
+<p>输出:</p>
+<pre class="hljs"><code><div>Hello Vue!
+</div></code></pre>
+<blockquote>
+<p>我们已经成功创建了第一个 Vue 应用！看起来这跟渲染一个字符串模板非常类似，但是 Vue 在背后做了大量工作。现在数据和 DOM 已经被建立了关联，所有东西都是响应式<code>(1)</code>的。</p>
+</blockquote>
+<ul>
+<li><code>(1)</code> 响应式指的是当Vue实例内部数据改变后,html模板部分也会随着改变.</li>
+</ul>
+<p>我们要怎么确认呢？打开你的浏览器的 JavaScript 控制台 (就在这个页面打开)，并修改 app.message 的值，你将看到上例相应地更新。</p>
+<p><strong>图片:chrome控制台.</strong><br>
+<img src="./Assets/chrome控制台.jpg" alt="iamge text"></p>
+<p>修改完成后输出为:</p>
+<pre class="hljs"><code><div>Hello world!
+</div></code></pre>
+<p>我们并没有修改HTML中的字符串,只是修改Vue实例而已,可以看到Vue做到了数据和HTML模板声明处的内容进行了数据绑定.</p>
+<h3 id="vue%E4%B8%AD%E7%9A%84data%E5%B1%9E%E6%80%A7">Vue中的data属性</h3>
+<p>Vue中data上挂载的所有的属性都会被添加到Vue实例上.</p>
+<p>也就是说如下的代码判断是正确的:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> app = <span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'app'</span>,
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Hello Vue.js!'</span>
+  }
+})
+
+app.message === <span class="hljs-string">'Hello Vue.js!'</span> <span class="hljs-comment">// true</span>
+
+app.message === app.data.message <span class="hljs-comment">// true</span>
+</div></code></pre>
+<p>所以我们可以在控制台中直接修改<code>app.message</code>,因为他就是<code>app.data.message</code>.</p>
+<p><strong>除了使用<code>{{ any }}</code>的方式用于输出文本,我们还可以修改其他的部分,下面的例子我们动态的修改了元素的<code>title</code>属性.</strong></p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app-2"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">v-bind:title</span>=<span class="hljs-string">"message"</span>&gt;</span>
+    鼠标悬停几秒钟查看此处动态绑定的提示信息！
+  <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> app2 = <span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'#app-2'</span>,
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'页面加载于 '</span> + <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().toLocaleString() <span class="hljs-comment">// {1}</span>
+  }
+})
+</div></code></pre>
+<ul>
+<li><code>{1}</code> 表达式 <code>new Date().toLocaleString()</code>会返回当前地区的时间,类型为<code>string</code>.</li>
+</ul>
+<p><strong>介绍</strong>:这个例子中我们使用了<code>v-bind:</code>指令,该指令告诉Vue将数据和HTML元素的属性进行绑定.</p>
+<p>当我们将鼠标移动到该元素上后会显示当前的时间.</p>
+<p><strong>图片:悬浮后的效果:</strong><br>
+<img src="./Assets/鼠标悬浮效果.jpg" alt="iamge text"></p>
+<p><strong>官方这节的解释:</strong></p>
+<blockquote>
+<p>这里我们遇到了一点新东西。你看到的 v-bind 特性被称为指令。指令带有前缀 v-，以表示它们是 Vue 提供的特殊特性。可能你已经猜到了，它们会在渲染的 DOM 上应用特殊的响应式行为。在这里，该指令的意思是：“将这个元素节点的 title 特性和 Vue 实例的 message 属性保持一致”。</p>
+</blockquote>
+<h2 id="%E6%9D%A1%E4%BB%B6%E4%B8%8E%E5%BE%AA%E7%8E%AF">条件与循环</h2>
+<blockquote>
+<p>控制切换一个元素是否显示也相当简单：</p>
+</blockquote>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app-3"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">"seen"</span>&gt;</span>现在你看到我了<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScipt:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> app3 = <span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'#app-3'</span>,
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">seen</span>: <span class="hljs-literal">true</span>
+  }
+})
+</div></code></pre>
+<p>在此处我们使用了<code>v-if</code>指令,该指令在条件为真的时候渲染具体的元素,在本例中他依附在了<code>p</code>元素上,也就是说他的判断会控制<code>p</code>元素是否出现在html中.</p>
+<blockquote>
+<p>继续在控制台输入 app3.seen = false，你会发现之前显示的消息消失了。</p>
+</blockquote>
+<p><strong>图片:控制台输入内容.</strong><br>
+<img src="./Assets/控制台输入false.jpg" alt="iamge text"></p>
+<p>这个时候你会发现<code>p</code>元素会自动的从html中消失.</p>
+<blockquote>
+<p>还有其它很多指令，每个都有特殊的功能。例如，v-for 指令可以绑定数组的数据来渲染一个项目列表<code>(1)</code>：</p>
+</blockquote>
+<ul>
+<li><code>(1)</code> 实际上就是数组</li>
+</ul>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app-4"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">ol</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"todo in todos"</span>&gt;</span>
+      {{ todo.text }}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ol</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> app4 = <span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'#app-4'</span>,
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">todos</span>: [
+      { <span class="hljs-attr">text</span>: <span class="hljs-string">'学习 JavaScript'</span> },
+      { <span class="hljs-attr">text</span>: <span class="hljs-string">'学习 Vue'</span> },
+      { <span class="hljs-attr">text</span>: <span class="hljs-string">'整个牛项目'</span> }
+    ]
+  }
+})
+</div></code></pre>
+<p><strong>图片:输出.</strong><br>
+<img src="./Assets/chapter1-列表输出.jpg" alt="iamge text"></p>
+<p><strong>分析</strong>:<code>v-for</code>指令会遍历指定列表中的所有内容,在本例中就是<code>todos</code>,在列表中有多少个元素就会执行多少次循环,每次循环中的内容会被临时存放到一个变量中本例中是<code>todo</code>,而<code>todo</code>中存放的是一个对象其<code>text</code>键上保存了我们需要的字符串,所以我们使用<code>todo.text</code>来获取具体的内容.</p>
+<blockquote>
+<p>在控制台里，输入 app4.todos.push({ text: '新项目' })<code>{1}</code>，你会发现列表最后添加了一个新项目。</p>
+</blockquote>
+<ul>
+<li><code>{1}</code> <code>array.push()</code>语法会将数组的末尾添加一个新的元素.</li>
+</ul>
+<p><strong>图片:控制台数组添加内容.</strong><br>
+<img src="./Assets/chapter1-列表控制台输入.jpg" alt="iamge text"></p>
+<h2 id="%E5%A4%84%E7%90%86%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5">处理用户输入</h2>
+<p>在这个例子中我们使用<code>v-on</code>指令和之前的例子不同,这次我们绑定的不是一个属性,而是一个方法.</p>
+<blockquote>
+<p>为了让用户和你的应用进行交互，我们可以用 v-on 指令添加一个事件监听器，通过它调用在 Vue 实例中定义的方法：</p>
+</blockquote>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app-5"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{{ message }}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">v-on:click</span>=<span class="hljs-string">"reverseMessage"</span>&gt;</span>逆转消息<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> // v-on后面跟随的是标准的DOM事件名称,点击事件的标准名称为click
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> app5 = <span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'#app-5'</span>,
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Hello Vue.js!'</span>
+  },
+  <span class="hljs-attr">methods</span>: {
+    <span class="hljs-attr">reverseMessage</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">this</span>.message = <span class="hljs-keyword">this</span>.message.split(<span class="hljs-string">''</span>).reverse().join(<span class="hljs-string">''</span>) <span class="hljs-comment">// {1}</span>
+    }
+  }
+})
+</div></code></pre>
+<p><strong>图片:没有点击按钮时候的样子:</strong><br>
+<img src="./Assets/chapter1-事件按钮未点击.jpg" alt="iamge text"></p>
+<p><strong>图片:点击按钮后的样子:</strong><br>
+<img src="./Assets/chapter1-事件按钮点击.jpg" alt="iamge text"></p>
+<ul>
+<li><code>{1}</code> <code>message.split('').reverse().join('')</code>执行步骤为: 将字符串转为字符串序列(数组)-&gt;将数组每一项反转-&gt;将数组合并为字符串.</li>
+</ul>
+<p><strong>解析</strong>:在HTML模板中的<code>v-on:click=&quot;reverseMessage&quot;</code>意思就是点击的时候触发用户提供的<code>reverseMessage</code>事件.</p>
+<p>这里涉及到了Vue实例上的一个新的属性<code>methods</code>该对象上挂载的所有内容都必须是方法,在Vue上用户提供的所有方法都会在<code>methods</code>属性上集中起来.</p>
+<h3 id="vue%E4%B8%AD%E7%9A%84this">Vue中的this</h3>
+<p>Vue的this指的就是Vue实例本身,上面的例子方法还可以做如下的判断:</p>
+<pre class="hljs"><code><div>reverseMessage: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span> === app5); <span class="hljs-comment">// true</span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.message === app5.message); <span class="hljs-comment">// true</span>
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-keyword">this</span>.message === app5.data.message); <span class="hljs-comment">//true</span>
+
+    <span class="hljs-keyword">this</span>.message = <span class="hljs-keyword">this</span>.message.split(<span class="hljs-string">''</span>).reverse().join(<span class="hljs-string">''</span>)
+}
+</div></code></pre>
+<blockquote>
+<p>Vue 还提供了 v-model 指令，它能轻松实现表单输入和应用状态之间的双向绑定<code>(1)</code>。</p>
+</blockquote>
+<ul>
+<li><code>(1)</code> 之前的例子中我们做的绑定都是单向绑定,也就是说Vue实例的数据变化会在HTML模板中展现出来,而双向绑定多了在HTML模板中的变化会影响到Vue实例中的数据.</li>
+</ul>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app-6"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>{{ message }}<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">"message"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> app6 = <span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'#app-6'</span>,
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Hello Vue!'</span>
+  }
+})
+</div></code></pre>
+<p><strong>图片:未输入内容的效果.</strong><br>
+<img src="Assets/chapter1-v-modle未使用.jpg" alt="image text"></p>
+<p><strong>图片:输入内容的效果.</strong><br>
+<img src="Assets/chapter1-v-modle使用.jpg" alt="image text"></p>
+<h2 id="%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BA%94%E7%94%A8%E6%9E%84%E5%BB%BA">组件化应用构建</h2>
+<blockquote>
+<p>组件系统是 Vue 的另一个重要概念，因为它是一种抽象，允许我们使用小型、独立和通常可复用的组件构建大型应用。仔细想想，几乎任意类型的应用界面都可以抽象为一个组件树：</p>
+</blockquote>
+<p><strong>图片:组件的基础概念:</strong><br>
+<img src="Assets/components.png" alt="image text"></p>
+<p><strong>分析</strong>:你可以理解为网页中有很多重复的部分例如:</p>
+<ul>
+<li>导航栏</li>
+<li>侧边栏</li>
+<li>一个按钮</li>
+</ul>
+<p>我知道你想说什么,是的不同页面甚至在同一个页面中这些东西看起来都是不同的.但是编程就是一门抽象的艺术,不同的外观只是CSS样式不同而已,但是他们的使用逻辑都是固定的,例如:一个导航栏绝对不可能播放视频,而一个按钮绝对不可能当作导航栏来使用.</p>
+<p>我们在编程中如果出项重复的部分我们会如何对待他?当然最简单的操作就是我们会<strong>定义一个函数</strong>将这些重复的部分打包.</p>
+<p>是的Vue的组件(实际上其他框架中也是)就是指的这种概念,我们将网页中每个部分都拆开,利用Vue将他们封装为一个个单独的组件.</p>
+<p>使用这些组件就像调用一个函数一样,我们可以<code>if</code>后调用也可以<code>for</code>循环中调用.</p>
+<p>当然这还让人摸不着头脑,例如我们有一个导航栏,但是按钮如果和导航栏是两个东西,那么导航栏如何知道这个按钮被点击的?</p>
+<p>不用担心这些答案都会在后面的章节中逐一揭开.</p>
+<h3 id="%E7%AE%80%E5%8D%95%E7%9A%84%E9%A1%B9%E7%9B%AE">简单的项目</h3>
+<p>这里例子中举了一个简单例子来使用Vue的组件.但是不用担心组件在这章中不是重点内容.</p>
+<blockquote>
+<p>在 Vue 里，一个组件本质上是一个拥有预定义选项的一个 Vue 实例。在 Vue 中注册组件很简单：</p>
+</blockquote>
+<pre class="hljs"><code><div><span class="hljs-comment">// 定义名为 todo-item 的新组件</span>
+Vue.component(<span class="hljs-string">'todo-item'</span>, {
+  <span class="hljs-attr">template</span>: <span class="hljs-string">'&lt;li&gt;这是个待办项&lt;/li&gt;'</span> <span class="hljs-comment">// 组件的特性 template 属性</span>
+})
+</div></code></pre>
+<blockquote>
+<p>现在你可以用它构建另一个组件模板：</p>
+</blockquote>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">ol</span>&gt;</span>
+  <span class="hljs-comment">&lt;!-- 创建一个 todo-item 组件的实例 --&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">todo-item</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">todo-item</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ol</span>&gt;</span>
+</div></code></pre>
+<blockquote>
+<p>但是这样会为每个待办项渲染同样的文本，这看起来并不炫酷。我们应该能从父作用域将数据传到子组件才对。让我们来修改一下组件的定义，使之能够接受一个 prop<code>(1)</code>：</p>
+</blockquote>
+<ul>
+<li><code>(1)</code> 简单的理解 prop中的内容类似于定义函数中的参数</li>
+</ul>
+<pre class="hljs"><code><div>Vue.component(<span class="hljs-string">'todo-item'</span>, {
+  <span class="hljs-comment">// todo-item 组件现在接受一个</span>
+  <span class="hljs-comment">// "prop"，类似于一个自定义特性。</span>
+  <span class="hljs-comment">// 这个 prop 名为 todo。</span>
+  props: [<span class="hljs-string">'todo'</span>],
+  <span class="hljs-attr">template</span>: <span class="hljs-string">'&lt;li&gt;{{ todo.text }}&lt;/li&gt;'</span>
+})
+</div></code></pre>
+<blockquote>
+<p>现在，我们可以使用 v-bind 指令将待办项传到循环输出的每个组件中：
+完整的HTML部分:</p>
+</blockquote>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app-7"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">ol</span>&gt;</span>
+    <span class="hljs-comment">&lt;!--
+      现在我们为每个 todo-item 提供 todo 对象
+      todo 对象是变量，即其内容可以是动态的。
+      我们也需要为每个组件提供一个“key”，稍后再
+      作详细解释。
+    --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">todo-item</span>
+      <span class="hljs-attr">v-for</span>=<span class="hljs-string">"item in groceryList"</span>
+      <span class="hljs-attr">v-bind:todo</span>=<span class="hljs-string">"item"</span>
+      <span class="hljs-attr">v-bind:key</span>=<span class="hljs-string">"item.id"</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">todo-item</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">ol</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>完整的JavaScript部分:</p>
+<pre class="hljs"><code><div>Vue.component(<span class="hljs-string">'todo-item'</span>, {
+  <span class="hljs-attr">props</span>: [<span class="hljs-string">'todo'</span>],
+  <span class="hljs-attr">template</span>: <span class="hljs-string">'&lt;li&gt;{{ todo.text }}&lt;/li&gt;'</span>
+})
+
+<span class="hljs-keyword">var</span> app7 = <span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'#app-7'</span>,
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">groceryList</span>: [
+      { <span class="hljs-attr">id</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'蔬菜'</span> },
+      { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'奶酪'</span> },
+      { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">text</span>: <span class="hljs-string">'随便其它什么人吃的东西'</span> }
+    ]
+  }
+})
+</div></code></pre>
+<p><strong>图片:输出:</strong><br>
+<img src="Assets/chapter1-组件输出.jpg" alt="image text"></p>
+<blockquote>
+<p>尽管这只是一个刻意设计的例子，但是我们已经设法将应用分割成了两个更小的单元。子单元通过 prop 接口与父单元进行了良好的解耦。我们现在可以进一步改进 <todo-item> 组件，提供更为复杂的模板和逻辑，而不会影响到父单元。</p>
+</blockquote>
+<blockquote>
+<p>在一个大型应用中，有必要将整个应用程序划分为组件，以使开发更易管理。在后续教程中我们将详述组件，不过这里有一个 (假想的) 例子，以展示使用了组件的应用模板是什么样的：</p>
+</blockquote>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">app-nav</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">app-nav</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">app-view</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">app-sidebar</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">app-sidebar</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">app-content</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">app-content</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">app-view</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+
+</body>
+</html>

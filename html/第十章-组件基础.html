@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>第十章-组件基础.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/*
+
+Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #23241f;
+}
+
+.hljs,
+.hljs-tag,
+.hljs-subst {
+  color: #f8f8f2;
+}
+
+.hljs-strong,
+.hljs-emphasis {
+  color: #a8a8a2;
+}
+
+.hljs-bullet,
+.hljs-quote,
+.hljs-number,
+.hljs-regexp,
+.hljs-literal,
+.hljs-link {
+  color: #ae81ff;
+}
+
+.hljs-code,
+.hljs-title,
+.hljs-section,
+.hljs-selector-class {
+  color: #a6e22e;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-name,
+.hljs-attr {
+  color: #f92672;
+}
+
+.hljs-symbol,
+.hljs-attribute {
+  color: #66d9ef;
+}
+
+.hljs-params,
+.hljs-class .hljs-title {
+  color: #f8f8f2;
+}
+
+.hljs-string,
+.hljs-type,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-selector-id,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-variable {
+  color: #e6db74;
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-meta {
+  color: #75715e;
+}
+
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h1 id="%E7%AE%80%E4%BB%8B">简介</h1>
+<p>组件(Component)可谓是Vue最核心的功能在目前流行的三天Web框架中<code>Vue</code>,<code>AngularJS</code>,<code>React</code>中都有他的身影.</p>
+<p>组件就是Vue实例只不过在参数选项上稍有不同,因为侧重点不同,Vue实例侧重于功能,而组件侧重于复用性.</p>
+<p>使用Vue书写一张或者一部分页面,不可能不使用组件,所以说<strong>组件是必知必会的部分</strong>.</p>
+<p>在了解了学习组件的重要性后,我们回顾在第一章中组件入门的一张中官网文档中对组件的解释:</p>
+<blockquote>
+<p>组件系统是 Vue 的另一个重要概念，因为它是一种抽象，允许我们使用小型、独立和通常可复用的组件构建大型应用。仔细想想，几乎任意类型的应用界面都可以抽象为一个组件树.</p>
+</blockquote>
+<p>现在我们使用一种全新的解释方式说明一下使用组件的具体好处.</p>
+<p>浏览器给我们提供了许多HTML标签,其中有一类很特殊就是自带有功能的元素,例如按钮,每当我们在HTML中添加如下的代码后:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>我是按钮<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+</div></code></pre>
+<p>网页上就会出现一个按钮,当然不同浏览器之间的显示效果不同,但是最终都会出现一个按钮.</p>
+<p>这一切看似非常自然,自然到我们都不会去思考浏览器背后做了什么,问题如下:</p>
+<ul>
+<li>按钮为什么会有样式?</li>
+<li>向元素传递的字符参数为什么会在按钮上显示?</li>
+<li>为什么会有点击事件(对于button不明显),如果是一个<code>&lt;audio&gt;</code>元素为什么会有<code>play</code>事件?</li>
+</ul>
+<p>实际上带有默认功能和样式的HTML元素并不是操作系统填入的东西,而是浏览器自身就有的而且他们也是使用:</p>
+<ul>
+<li>HTML</li>
+<li>Css</li>
+<li>JavaScript</li>
+</ul>
+<p>写出来的只不过是隐藏了他们的具体结构,他们被定义为了浏览器的自带元素,这类元素被称为<code>shadow element</code>.</p>
+<p>在<code>chrome v71</code>中我添加了一个<code>&lt;video&gt;</code>元素,然后再开发者控制台中设置运行该元素的<code>shadow</code>部分可见:</p>
+<p><strong>图片:空的video元素在页面中的效果:</strong><br>
+<img src="Assets/chapter-10-example1.jpg" alt="image text"></p>
+<p><strong>图片:空的video元素的背后的HTML结构:</strong><br>
+<img src="Assets/chapter-10-example2.jpg" alt="image text"></p>
+<p><code>&lt;video&gt;</code>和<code>&lt;button&gt;</code>在背后做了很多工作,但是在我们使用它的时候仅仅写几个单词就可以使用了,这就是<strong>浏览器原生的组件的概念.</strong></p>
+<p>Vue组件的基本概念就是:允许你利用它的强大特性在Vue的作用范围内定义一个你的HTML标签,这个标签拥有它自己的功能,一旦这个组件被定义好功能,继续使用组件就在使用一个HTML标签.这样带来的好处就是<strong>复用性</strong>我们可以多次的使用这个标签而不用去修改代码.</p>
+<h1 id="%E5%9F%BA%E6%9C%AC%E7%A4%BA%E4%BE%8B">基本示例</h1>
+<p>注册一个组件和创建一个Vue实例十分相似:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 定义一个名为 button-counter 的新组件</span>
+Vue.component(<span class="hljs-string">'button-counter'</span>, {
+  <span class="hljs-attr">data</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">count</span>: <span class="hljs-number">0</span>
+    }
+  },
+  <span class="hljs-attr">template</span>: <span class="hljs-string">'&lt;button v-on:click="count++"&gt;一共点击 {{ count }}次.&lt;/button&gt;'</span>
+})
+</div></code></pre>
+<p>对比新建一个Vue实例,创建一个Vue组件有如下的不同:</p>
+<ul>
+<li>使用Vue.component()创建</li>
+<li>没有el选项</li>
+<li>data不在是一个对象字面量而是一个函数返回一个对象字面量</li>
+<li>多了一个template选项内部填充的是HTML字符串</li>
+</ul>
+<blockquote>
+<p><strong>组件是可复用的 Vue 实例</strong>，且带有一个名字：在这个例子中是 <button-counter>。我们可以在一个通过 new Vue 创建的 Vue 根实例中，把这个组件作为自定义元素来使用：</p>
+</blockquote>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">button-counter</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button-counter</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">new</span> Vue({ <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span> })
+</div></code></pre>
+<p><strong>图片:使用组件:</strong><br>
+<img src="Assets/chapter-10-example3.jpg" alt="image text"></p>
+<h1 id="%E7%BB%84%E4%BB%B6%E7%9A%84%E5%A4%8D%E7%94%A8">组件的复用</h1>
+<blockquote>
+<p>你可以将组件进行任意次数的复用:</p>
+</blockquote>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">button-counter</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button-counter</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">button-counter</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button-counter</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">button-counter</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">button-counter</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>这样一来页面中就会出现3个按钮.</p>
+<p><strong>图片:三个按钮分别点击后的效果:</strong><br>
+<img src="Assets/chapter-10-example4.jpg" alt="image text"></p>
+<p>我们创建了3个组件,但是每个组件内部的数据是不同的,所以他们展示的数据是不一样的.当你每次使用一个组件都会有一个新的Vue实例产生.</p>
+<h1 id="data-%E5%BF%85%E9%A1%BB%E6%98%AF%E4%B8%80%E4%B8%AA%E5%87%BD%E6%95%B0"><code>data</code> 必须是一个函数</h1>
+<blockquote>
+<p>当我们定义这个 <code>&lt;button-counter&gt;</code> 组件时，你可能会发现它的 <code>data</code> 并不是像这样直接提供一个对象:</p>
+</blockquote>
+<pre class="hljs"><code><div>data: {
+  <span class="hljs-attr">count</span>: <span class="hljs-number">0</span>
+}
+</div></code></pre>
+<blockquote>
+<p>取而代之的是，<strong>一个组件的 <code>data</code> 选项必须是一个函数</strong>，因此每个实例可以维护一份被返回对象的独立的拷贝<code>(1)</code>:</p>
+</blockquote>
+<ul>
+<li>函数每次返回的<code>data</code>都不是同一个,这些返回的对象的地址都是不相同的,虽然结构是一样的</li>
+</ul>
+<pre class="hljs"><code><div>data: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">count</span>: <span class="hljs-number">0</span>
+  }
+}
+</div></code></pre>
+<p>如果没有这条规则,那么有多个同一个组件当其中一个组件的数据变化后其余的都会随之变化.</p>
+<h1 id="%E7%BB%84%E4%BB%B6%E7%9A%84template">组件的<code>template</code></h1>
+<p>一个组件如下:</p>
+<pre class="hljs"><code><div>Vue.component(<span class="hljs-string">'button-counter'</span>, {
+  <span class="hljs-attr">data</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-attr">count</span>: <span class="hljs-number">0</span>
+    }
+  },
+  <span class="hljs-attr">template</span>: <span class="hljs-string">'&lt;button v-on:click="count++"&gt;一共点击 {{ count }}次.&lt;/button&gt;'</span>
+})
+</div></code></pre>
+<p>都会有一个<code>template</code>属性<code>template</code>有很多种用法,无论那种用法都是用于告诉组件处理HTML内容的范围.</p>
+<p><strong>注意</strong>:<code>template</code>对于的HTML只能有一个根元素,也就是说:</p>
+<p>这个是可以的:</p>
+<pre class="hljs"><code><div>template: '&lt;button&gt;一个按钮&lt;/button&gt;'
+</div></code></pre>
+<p>但是这个就不可以:</p>
+<pre class="hljs"><code><div>template: '&lt;button&gt;一个按钮&lt;/button&gt;&lt;button&gt;两个按钮&lt;/button&gt;'
+</div></code></pre>
+<p>对于上面的解决方案就是使用一个元素将两个<code>&lt;button&gt;</code>进行包裹起来:</p>
+<pre class="hljs"><code><div>template: '&lt;div&gt;&lt;button&gt;一个按钮&lt;/button&gt;&lt;button&gt;两个按钮&lt;/button&gt;&lt;/div&gt;'
+</div></code></pre>
+<h1 id="%E7%BB%84%E4%BB%B6%E7%9A%84%E7%BB%84%E7%BB%87">组件的组织</h1>
+<blockquote>
+<p>通常一个应用会以一棵嵌套的组件树的形式来组织:</p>
+</blockquote>
+<p><strong>图片:页面结构对应的组件结构:</strong><br>
+<img src="Assets/components.png" alt="image text"></p>
+<p>例如在一个常见的网页页面中经常有如下的元素我们把它拆分一下:</p>
+<ul>
+<li>导航栏
+<ul>
+<li>搜索框</li>
+<li>链接</li>
+<li>按钮</li>
+<li>下列菜单</li>
+</ul>
+</li>
+<li>侧边栏
+<ul>
+<li>按钮</li>
+<li>链接</li>
+<li>按钮</li>
+</ul>
+</li>
+<li>内容区域
+<ul>
+<li>文章背景区域</li>
+<li>按钮</li>
+<li>链接</li>
+</ul>
+</li>
+<li>页尾
+<ul>
+<li>背景区域</li>
+<li>链接</li>
+<li>按钮</li>
+</ul>
+</li>
+</ul>
+<p>如果上述的所有内容都是组件的话,现在它们还不够完善:</p>
+<ol>
+<li>没有被挂载到Vue实例</li>
+<li>还不够细化,还可以更加细化</li>
+</ol>
+<p>完善后:</p>
+<ul>
+<li>Vue实例
+<ul>
+<li>导航栏
+<ul>
+<li>搜索框
+<ul>
+<li>按钮</li>
+<li>输入框</li>
+</ul>
+</li>
+<li>链接</li>
+<li>按钮</li>
+<li>下列菜单
+<ul>
+<li>按钮</li>
+<li>链接</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>侧边栏
+<ul>
+<li>按钮</li>
+<li>链接</li>
+</ul>
+</li>
+<li>内容区域
+<ul>
+<li>文章区域
+<ul>
+<li>标准背景区域</li>
+</ul>
+</li>
+<li>按钮</li>
+<li>链接</li>
+</ul>
+</li>
+<li>页尾
+<ul>
+<li>页尾信息区域
+<ul>
+<li>标准背景区域</li>
+</ul>
+</li>
+<li>链接</li>
+<li>按钮</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>为了能在模板中使用，这些组件必须先注册以便 Vue 能够识别。这里有两种组件的注册类型：<strong>全局注册</strong>和<strong>局部注册</strong>。至此，我们的组件都只是通过 <code>Vue.component</code> 全局注册的：</p>
+</blockquote>
+<pre class="hljs"><code><div>Vue.component(<span class="hljs-string">'my-component-name'</span>, {
+  <span class="hljs-comment">// ... options ...</span>
+})
+</div></code></pre>
+<blockquote>
+<p>全局注册的组件可以用在其被注册之后的任何 (通过 new Vue) 新创建的 Vue 根实例，也包括其组件树中的所有子组件的模板中。</p>
+</blockquote>
+<p><strong>注意</strong>:在全局注册的情况下,如果一个组件(a)被另外一个组件(b)依赖,那么(a)的注册一定要在(b)的前面,而Vue实例的创建一定是最后一个.</p>
+<h1 id="%E5%90%91%E5%AD%90%E7%BB%84%E4%BB%B6%E4%BC%A0%E9%80%92%E6%95%B0%E6%8D%AE">向子组件传递数据</h1>
+<p>当我们定义了一个组件后,很多的情况下父组件(实例)都会向他传递一些数据.</p>
+<p>例如:我们定义了一个按钮组件,这个按钮组件其中的字符串展示是由父元素的传入的字符串决定的.</p>
+<p>实际上定义组件变得更像定义一个函数(伪代码):</p>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">button</span>(<span class="hljs-params">str</span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'button上的内容是'</span>+str);
+}
+button(<span class="hljs-string">'确认'</span>);
+</div></code></pre>
+<p>组件想要接受数据需要使用他的<code>props</code>选项,这个选项就好像函数的参数列表一样,允许父组件(实例)传入参数:</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">my-button</span> <span class="hljs-attr">str</span>=<span class="hljs-string">"确认"</span> &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">my-button</span> <span class="hljs-attr">str</span>=<span class="hljs-string">"取消"</span> &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div>Vue.component(<span class="hljs-string">'my-button'</span>, {
+    <span class="hljs-attr">props</span>:[<span class="hljs-string">'str'</span>],
+    <span class="hljs-attr">template</span>: <span class="hljs-string">'&lt;button&gt; {{ str }} &lt;/button&gt;'</span>
+})
+
+<span class="hljs-keyword">new</span> Vue({ <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span> })
+</div></code></pre>
+<p><strong>图片:使用<code>props</code>:</strong><br>
+<img src="Assets/chapter-10-example5.jpg" alt="image text"></p>
+<p>在上面的例子中<code>props:['str']</code>数组定义的字符串内容就是参数的名称,当然可以定义多个参数.而<code>str=&quot;确认&quot;</code>和<code>str=&quot;取消&quot;</code>就类似于调用函数时候传入的参数.</p>
+<p><strong>注意</strong>:使用<code>str=&quot;xxx&quot;</code>的方式的时候无论<code>xxx</code>是具体的什么内容都将被视为字符串,如果想传入一些固定的内容非字符串内容需要使用<code>v-bind</code>例如传递一个对象<code>v-bind:str=&quot;{str:xxx}&quot;</code>.</p>
+<p>而<code>props</code>有一个特性和<code>data</code>一样,就是<code>props</code>中定义的参数在<code>template</code>中可以获取到上例中我们在<code>&lt;button&gt;</code>中输出了这个字符串.</p>
+<p>假设我们有一个数组中保存了所有的按钮的名字,我们可以<code>v-for</code>指令进行批量渲染.</p>
+<p>在下面这个例子中我们将会接触到:</p>
+<ul>
+<li>在组件上使用<code>v-for</code></li>
+<li>在循环中使用<code>key</code>属性</li>
+<li>在组件上使用<code>v-bind</code></li>
+<li>Vue实例和组件的数据交互</li>
+</ul>
+<p><strong>注意</strong>:<code>v-bind</code>的简写为<code>:</code>下面的例子中将使用简写.</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">my-button</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"item in buttonList"</span> <span class="hljs-attr">:str</span>=<span class="hljs-string">"item.str"</span> <span class="hljs-attr">:key</span>=<span class="hljs-string">"item.id"</span> &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div>Vue.component(<span class="hljs-string">'my-button'</span>, {
+    <span class="hljs-attr">props</span>: [<span class="hljs-string">'str'</span>],
+    <span class="hljs-attr">template</span>: <span class="hljs-string">'&lt;button&gt; {{ str }} &lt;/button&gt;'</span>
+});
+
+<span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">data</span>:{
+        <span class="hljs-attr">buttonList</span>:[{
+            <span class="hljs-attr">id</span>:<span class="hljs-number">0</span>,
+            <span class="hljs-attr">str</span>:<span class="hljs-string">'确认'</span>
+        },{
+            <span class="hljs-attr">id</span>:<span class="hljs-number">1</span>,
+            <span class="hljs-attr">str</span>:<span class="hljs-string">'取消'</span>
+        },{
+            <span class="hljs-attr">id</span>:<span class="hljs-number">2</span>,
+            <span class="hljs-attr">str</span>:<span class="hljs-string">'删除'</span>
+        }]
+    }
+});
+</div></code></pre>
+<p><strong>图片:使用数组创建一个按钮组:</strong><br>
+<img src="Assets/chapter-10-example6.jpg" alt="image text"></p>
+<h1 id="%E9%80%9A%E8%BF%87%E4%BA%8B%E4%BB%B6%E5%90%91%E7%88%B6%E7%BA%A7%E7%BB%84%E4%BB%B6%E5%8F%91%E9%80%81%E6%B6%88%E6%81%AF">通过事件向父级组件发送消息</h1>
+<p>在本例中你会了解到:</p>
+<ul>
+<li>子组件如何与父组件(实例)进行通信</li>
+<li>动态的修改样式</li>
+<li>Vue实例监听组件的事件</li>
+<li>组件监听元素事件</li>
+<li>使用<code>this.xxx</code>的形式获取<code>props</code>的值</li>
+</ul>
+<p><strong>注意</strong>:本例中监听方法使用简写形式<code>v-on</code>的简写形式为<code>@</code>.
+<strong>注意</strong>:定义方法的过程已经在第一章和第八章中提及.</p>
+<p>我们有一个文章区域,旁边有两个按钮,一个是用于放大文章区域的字体,另外一个是缩小文章区域的字体.</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">:style</span>=<span class="hljs-string">"{fontSize:fz+'px'}"</span>&gt;</span>
+        当前的字体大小为{{ fz }}.
+    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">my-button</span> 
+    <span class="hljs-attr">v-for</span>=<span class="hljs-string">"item in buttonList"</span> 
+    <span class="hljs-attr">:str</span>=<span class="hljs-string">"item.str"</span> 
+    <span class="hljs-attr">:key</span>=<span class="hljs-string">"item.id"</span>
+    @<span class="hljs-attr">zoom</span>=<span class="hljs-string">"zoomHandle"</span>
+        &gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">my-button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div>Vue.component(<span class="hljs-string">'my-button'</span>, {
+    <span class="hljs-attr">props</span>: [<span class="hljs-string">'str'</span>],
+    <span class="hljs-attr">methods</span>:{
+        <span class="hljs-attr">clickHandle</span>:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+            <span class="hljs-keyword">this</span>.$emit(<span class="hljs-string">'zoom'</span>,<span class="hljs-keyword">this</span>.str);
+        }
+    },
+    <span class="hljs-attr">template</span>: <span class="hljs-string">'&lt;button @click="clickHandle"&gt; {{ str }} &lt;/button&gt;'</span>
+});
+
+<span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">data</span>:{
+        <span class="hljs-attr">fz</span>:<span class="hljs-number">20</span>,
+        <span class="hljs-attr">buttonList</span>:[
+            {<span class="hljs-attr">id</span>:<span class="hljs-number">0</span>,<span class="hljs-attr">str</span>:<span class="hljs-string">'放大'</span>},
+            {<span class="hljs-attr">id</span>:<span class="hljs-number">1</span>,<span class="hljs-attr">str</span>:<span class="hljs-string">'缩小'</span>}
+            ]
+    },
+    <span class="hljs-attr">methods</span>:{
+        <span class="hljs-attr">zoomHandle</span>:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">str</span>)</span>{
+            <span class="hljs-keyword">if</span>(str==<span class="hljs-string">'放大'</span>){
+                <span class="hljs-keyword">this</span>.fz+=<span class="hljs-number">10</span>;
+            }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(str==<span class="hljs-string">'缩小'</span>){
+                <span class="hljs-keyword">this</span>.fz-=<span class="hljs-number">10</span>;
+            }
+        }
+    }
+});
+</div></code></pre>
+<p><strong>图片:放大缩小文章内容:</strong><br>
+<img src="Assets/chapter-10-example7.jpg" alt="image text"></p>
+<p>这个例子看似复杂,实际上相当简单,总共分为3步:</p>
+<ol>
+<li>本例中的<code>&lt;my-button&gt;</code>组件要监听模板字符串(tempate)中的<code>&lt;input&gt;</code>元素的<code>click</code>事件,否则他无法知道自己是否被点击.</li>
+<li>在<code>&lt;my-button&gt;</code>监听到被点击后,调用<code>this.$emit('zoom',this.str)</code>触发一个名字叫做<code>zoom</code>的事件,这个事件有一个参数<code>str</code>以便让父元素判断是放大还是缩小.</li>
+<li>父元素监听<code>&lt;my-button&gt;</code>的<code>zoom</code>事件,根据<code>zoom</code>事件传递过来的参数判断是放大还是缩小然后修改自己内部的数据.</li>
+</ol>
+<p>补充:</p>
+<ul>
+<li>上文说道<code>props</code>和<code>data</code>一样可以用于模板渲染,不仅如此<code>props</code>同样的可以使用<code>this.xxx</code>的方式进行获取.</li>
+<li><code>$emit</code>是Vue的实例方法之一.</li>
+</ul>
+<h1 id="%E9%80%9A%E8%BF%87%E6%8F%92%E6%A7%BD1%E5%88%86%E5%8F%91%E5%86%85%E5%AE%B9">通过插槽<code>(1)</code>分发内容</h1>
+<ul>
+<li>插槽(slot)具体指的是渲染的出口,或者简单理解就是输出字符串的位置,而这个语法是在子组件中定义使用起来就像插座的入口一样.</li>
+</ul>
+<blockquote>
+<p>和 HTML 元素一样，我们经常需要向一个组件传递内容，像这样:</p>
+</blockquote>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">alert-box</span>&gt;</span>
+  Something bad happened.
+<span class="hljs-tag">&lt;/<span class="hljs-name">alert-box</span>&gt;</span>
+</div></code></pre>
+<p>上面的<code>&lt;alert-box&gt;</code>是一个警告组件,任何进入的内容都会有一个红色的背景,渲染出来的样子是这个样子的:</p>
+<p><strong>图片:<code>&lt;alert-box&gt;</code>的样子:</strong><br>
+<img src="Assets/chapter-10-example8.jpg" alt="image text"></p>
+<p>在没有学习插槽前我们使用<code>props</code>也可以完成这个功能,但是如果你尝试在两个标签中传入数据你会发现最终什么都不会被渲染出来.</p>
+<p>在Vue组件中我们可以使用<code>&lt;slot&gt;</code>标签来定义一个插槽,这个标签在字符串模板(template)中的位置将决定上方的字符串在何处被渲染出来.</p>
+<p>在最终的结果中<code>&lt;slot&gt;</code>元素会被删除,而被传入的数据所替换.</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">alert-box</span>&gt;</span>
+        警告内容
+    <span class="hljs-tag">&lt;/<span class="hljs-name">alert-box</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div>Vue.component(<span class="hljs-string">'alert-box'</span>,{
+    <span class="hljs-attr">template</span>:<span class="hljs-string">'&lt;div style="background-color:red;border:2px solid #000;color:#fff;" &gt;&lt;slot&gt;&lt;/slot&gt;&lt;/div&gt;'</span>
+});
+
+<span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>
+})
+</div></code></pre>
+<p><strong>图片:使用插槽的效果:</strong><br>
+<img src="Assets/chapter-10-example9.jpg" alt="image text"></p>
+<p><strong>图片:使用插槽后的DOM结构:</strong><br>
+<img src="Assets/chapter-10-example10.jpg" alt="image text"></p>
+
+</body>
+</html>

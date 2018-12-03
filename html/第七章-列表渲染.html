@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>第七章-列表渲染.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/*
+
+Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #23241f;
+}
+
+.hljs,
+.hljs-tag,
+.hljs-subst {
+  color: #f8f8f2;
+}
+
+.hljs-strong,
+.hljs-emphasis {
+  color: #a8a8a2;
+}
+
+.hljs-bullet,
+.hljs-quote,
+.hljs-number,
+.hljs-regexp,
+.hljs-literal,
+.hljs-link {
+  color: #ae81ff;
+}
+
+.hljs-code,
+.hljs-title,
+.hljs-section,
+.hljs-selector-class {
+  color: #a6e22e;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-name,
+.hljs-attr {
+  color: #f92672;
+}
+
+.hljs-symbol,
+.hljs-attribute {
+  color: #66d9ef;
+}
+
+.hljs-params,
+.hljs-class .hljs-title {
+  color: #f8f8f2;
+}
+
+.hljs-string,
+.hljs-type,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-selector-id,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-variable {
+  color: #e6db74;
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-meta {
+  color: #75715e;
+}
+
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h1 id="%E4%BD%BF%E7%94%A8v-for%E6%8C%87%E4%BB%A4%E6%9D%A5%E6%89%B9%E9%87%8F%E6%B8%B2%E6%9F%93">使用v-for指令来批量渲染</h1>
+<p>一个基本的<code>v-for</code>指令使用如下:</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"item in list"</span>&gt;</span>
+        {{ item }}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">data</span>: {
+        <span class="hljs-attr">list</span>:[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]
+    }
+})
+</div></code></pre>
+<p><strong>图片:输出内容:</strong><br>
+<img src="Assets/chapter-7-v-forbase.jpg" alt="image text"></p>
+<p><strong>图片:DOM结构:</strong><br>
+<img src="Assets/chapter-7-v-forbaseDOM.jpg" alt="image text"></p>
+<p>使用<code>v-for</code>指令可以迭代一个列表中的内容,迭代的次数取决于列表(数组)的长度.<br>
+在上个例子中我们的数组长度为3,结果中就创建了3个<code>&lt;p&gt;</code>标签.</p>
+<p>而<code>v-for=&quot;item in list&quot;</code>中<code>list</code>就是需要被迭代的列表(数组),而<code>item</code>每次循环时候的具体内容.</p>
+<h2 id="%E8%BF%AD%E4%BB%A3%E5%AF%B9%E8%B1%A1">迭代对象</h2>
+<p>上个例子中我们演示了<code>v-for</code>指令迭代一个列表(数组).</p>
+<p>同样的<code>v-for</code>指令也可以迭代一个对象:</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"value in obj"</span>&gt;</span>
+        {{ value }}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">data</span>: {
+        <span class="hljs-attr">obj</span>:{
+            <span class="hljs-attr">firstWord</span>:<span class="hljs-string">'hello'</span>,
+            <span class="hljs-attr">lastWord</span>:<span class="hljs-string">'vue'</span>
+        }
+    }
+})
+</div></code></pre>
+<p>输出:</p>
+<pre class="hljs"><code><div>· hello
+· vue
+</div></code></pre>
+<h2 id="%E9%A2%9D%E5%A4%96%E7%9A%84%E5%8F%82%E6%95%B0">额外的参数</h2>
+<p>在JavaScript原生的数组迭代中有一个<code>forEach</code>方法,该方法有着如下的可选参数:</p>
+<pre class="hljs"><code><div>[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>].forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">value,index,array</span>)</span>{
+    <span class="hljs-comment">// value == 每次循环时候元素的值</span>
+    <span class="hljs-comment">// index == 当前循环的下标</span>
+    <span class="hljs-comment">// array == 数组本身</span>
+})
+</div></code></pre>
+<p><code>v-for</code>指令同样提供了上述参数,现在我们来尝试迭代一个<strong>数组</strong>:</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"(item,index) in list"</span>&gt;</span>
+        {{ item +'--'+ index +'--'+ list }}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">data</span>: {
+        <span class="hljs-attr">list</span>:[<span class="hljs-string">'one'</span>,<span class="hljs-string">'two'</span>,<span class="hljs-string">'three'</span>]
+    }
+})
+</div></code></pre>
+<p><strong>图片:<code>v-for</code>迭代列表使用额外参数效果:</strong><br>
+<img src="Assets/chapter-7-v-listMore.jpg" alt="image text"></p>
+<p>上例中:</p>
+<ul>
+<li>item == 元素本身</li>
+<li>index == 元素在数组中的下标</li>
+</ul>
+<p>现在我们来尝试一下<strong>对象</strong>的语法:</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"(value,key,index) in obj"</span>&gt;</span>
+        {{ key +'--'+ value +'--'+ index }}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">data</span>: {
+        <span class="hljs-attr">obj</span>:{
+            <span class="hljs-attr">firstWrod</span>:<span class="hljs-string">'hello'</span>,
+            <span class="hljs-attr">lastWord</span>:<span class="hljs-string">'vue'</span>
+        }
+    }
+})
+</div></code></pre>
+<p><strong>图片:<code>v-for</code>迭代对象使用额外参数效果:</strong><br>
+<img src="Assets/chapter-7-v-listObjMore.jpg" alt="image text"></p>
+<p>上例中:</p>
+<ul>
+<li>value == 对象的值</li>
+<li>key == 对象的键</li>
+<li>index == 当前循环的下标</li>
+</ul>
+<h1 id="%E7%89%B9%E6%AE%8A%E5%B1%9E%E6%80%A7key">特殊属性<code>key</code></h1>
+<p>还记得第六章中条件渲染中的<code>key</code>属性吗,给元素指定一个不唯一的值,告诉Vue他们不是同一个元素来避免元素的复用.</p>
+<p>在列表渲染中,也有<code>key</code>属性但是含义不同.</p>
+<p>实际上这个属性是<strong>必须传递</strong>的,只是在上面的例子中为了简化没有提供.</p>
+<h2 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8key">为什么要使用key</h2>
+<blockquote>
+<p>当 Vue.js 用 v-for 正在更新已渲染过的元素列表时，它默认用“就地复用”策略。如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序， 而是简单复用此处每个元素，并且确保它在特定索引下显示已被渲染过的每个元素。<code>{1}</code></p>
+</blockquote>
+<ul>
+<li><code>{1}</code> 简单的来讲默认的情况下Vue不会去修改DOM来渲染改变后的列表.而是仅仅替换元素的属性或者内部的文本把它变成符合列表的样子.</li>
+</ul>
+<blockquote>
+<p>为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 key 属性。理想的 key 值是每项都有的唯一 id。这个特殊的属性相当于 Vue 1.x 的 track-by ，但它的工作方式类似于一个属性，所以你需要用 v-bind 来绑定动态值：</p>
+</blockquote>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"item in items"</span> <span class="hljs-attr">:key</span>=<span class="hljs-string">"item.id"</span>&gt;</span>
+  <span class="hljs-comment">&lt;!-- 内容 --&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<blockquote>
+<p>建议尽可能在使用 v-for 时提供 key，除非遍历输出的 DOM 内容非常简单，或者是刻意依赖默认行为以获取性能上的提升。</p>
+</blockquote>
+<blockquote>
+<p>因为它是 Vue 识别节点的一个通用机制，key 并不与 v-for 特别关联，key 还具有其他用途，我们将在后面的指南中看到其他用途。</p>
+</blockquote>
+<h1 id="%E6%95%B0%E7%BB%84%E6%9B%B4%E6%96%B0%E6%A3%80%E6%B5%8B">数组更新检测</h1>
+<p>这一章稍显复杂,但是关键的问题是<strong>Vue有时候会在数据改变的时候获取不到更新</strong>.<br>
+一旦Vue获取不到数据的更新那么,也就无法进行响应式渲染.</p>
+<p>总得来说,这个问题凸显在两个部分:</p>
+<ol>
+<li>运行时修改数组</li>
+<li>运行时添加属性</li>
+</ol>
+<p>在下面的表格中,我列举了所有的修改<strong>数组</strong>的方法,并且给出了补救策略:</p>
+<table>
+<thead>
+<tr>
+<th>修改方法</th>
+<th>描述</th>
+<th>是否可以触发响应式</th>
+<th>补救策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[0] = 'xxx'</td>
+<td>利用下标直接赋值</td>
+<td>否</td>
+<td>使用Vue提供的Vue.set()</td>
+</tr>
+<tr>
+<td>[].length='x'</td>
+<td>修改数组的length</td>
+<td>否</td>
+<td>同上或者使用vm.items.splice(newLength)</td>
+</tr>
+<tr>
+<td>[].push()</td>
+<td>向数组添加内容</td>
+<td>是</td>
+<td></td>
+</tr>
+<tr>
+<td>[].pop()</td>
+<td>获取数组的内容</td>
+<td>是</td>
+<td></td>
+</tr>
+<tr>
+<td>[].shift()</td>
+<td>获取数组的内容</td>
+<td>是</td>
+<td></td>
+</tr>
+<tr>
+<td>[].unshift()</td>
+<td>向数组添加内容</td>
+<td>是</td>
+<td></td>
+</tr>
+<tr>
+<td>[].splice()</td>
+<td>切割或修改数组</td>
+<td>是</td>
+<td></td>
+</tr>
+<tr>
+<td>[].sort()</td>
+<td>排序数组</td>
+<td>是</td>
+<td></td>
+</tr>
+<tr>
+<td>[].reverse()</td>
+<td>反转数组</td>
+<td>是</td>
+<td></td>
+</tr>
+<tr>
+<td>[].filter()</td>
+<td>过滤数组内容</td>
+<td>否</td>
+<td>获取返回值然后重新赋值 vm.list = vm.list.filter(xxx)</td>
+</tr>
+<tr>
+<td>[].concat()</td>
+<td>连接多个数组</td>
+<td>否</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>[].slice()</td>
+<td>切割数组</td>
+<td>否</td>
+<td>同上</td>
+</tr>
+</tbody>
+</table>
+<p>为了展示问题所在运行如下的例子:</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"item in list"</span>&gt;</span>
+        {{ item }}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> app = <span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">data</span>: {
+        <span class="hljs-attr">list</span>:[<span class="hljs-string">'hello'</span>,<span class="hljs-string">'vue'</span>,<span class="hljs-string">'!'</span>]
+    }
+});
+
+<span class="hljs-built_in">console</span>.log(app.list[<span class="hljs-number">0</span>]); <span class="hljs-comment">// 输出 hello</span>
+
+app.list[<span class="hljs-number">0</span>] = <span class="hljs-string">'world'</span>;
+
+<span class="hljs-built_in">console</span>.log(app.list[<span class="hljs-number">0</span>]); <span class="hljs-comment">// 输出 world</span>
+</div></code></pre>
+<p><strong>图片:直接使用数组下标赋值后的效果:</strong><br>
+<img src="Assets/chapter-7-listindex.jpg" alt="image text"></p>
+<p>可以看到即使我修改了数组的内容,但是Vue没有进行重新渲染.</p>
+<hr>
+<p>下面的例子中,我们在执行的时候动态的给<code>data</code>中添加一个<strong>属性</strong>:</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">"info.name"</span>&gt;</span>
+        {{ info.name }}
+        {{ info.age }}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> app = <span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">data</span>: {
+        <span class="hljs-attr">info</span>:{
+            <span class="hljs-attr">name</span>:<span class="hljs-string">''</span>
+        }
+    },
+    <span class="hljs-comment">// mounted -- Vue声明周期钩子函数之一</span>
+    mounted:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+        <span class="hljs-keyword">this</span>.info.age = <span class="hljs-number">20</span>;
+        <span class="hljs-keyword">this</span>.info.name = <span class="hljs-string">'ASCll'</span>;
+    }
+});
+</div></code></pre>
+<p>在这个例子中不仅仅<code>age</code>属性无法添加,甚至由于<code>age</code>不存在导致报错.</p>
+<p><strong>图片:报错:</strong><br>
+<img src="Assets/chapter-7-error.jpg" alt="image text"></p>
+<p><strong>补救办法</strong>:使用<code>Vue.set()</code>.</p>
+<h2 id="%E8%A1%A5%E6%95%91%E5%8A%9E%E6%B3%95%E8%AF%A6%E8%A7%A3">补救办法详解</h2>
+<h3 id="1-vueset%E6%96%B9%E6%B3%95%E7%9A%84%E4%BD%BF%E7%94%A8%E5%AE%9E%E4%BE%8B">1. Vue.set()方法的使用实例:</h3>
+<p><strong>Vue.set()是Vue的静态方法.</strong></p>
+<p>该方法定义如下:</p>
+<pre class="hljs"><code><div>Vue.set( target, key, value )
+</div></code></pre>
+<table>
+<thead>
+<tr>
+<th>键名</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>target</td>
+<td>要修改的目标</td>
+</tr>
+<tr>
+<td>key</td>
+<td>目标的键名</td>
+</tr>
+<tr>
+<td>value</td>
+<td>对应键名的值</td>
+</tr>
+</tbody>
+</table>
+<p>现在我们使用<code>Vue.set</code>修复上面<strong>数组</strong>例子中的问题:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> app = <span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">data</span>: {
+        <span class="hljs-attr">list</span>:[<span class="hljs-string">'hello'</span>,<span class="hljs-string">'vue'</span>,<span class="hljs-string">'!'</span>]
+    }
+});
+
+<span class="hljs-built_in">console</span>.log(app.list[<span class="hljs-number">0</span>]); <span class="hljs-comment">// hello</span>
+
+Vue.set(app.list,<span class="hljs-number">0</span>,<span class="hljs-string">'world'</span>);
+
+<span class="hljs-built_in">console</span>.log(app.list[<span class="hljs-number">0</span>]); <span class="hljs-comment">// world</span>
+</div></code></pre>
+<p><strong>图片:使用<code>Vue.set</code>后的结果:</strong><br>
+<img src="Assets/chapter-7-vuesetlist.jpg" alt="image text"></p>
+<p>另外一个例子使用<code>Vue.set</code>修复上面<strong>对象</strong>例子中的问题:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> app = <span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">data</span>: {
+        <span class="hljs-attr">info</span>:{
+            <span class="hljs-attr">name</span>:<span class="hljs-string">''</span>
+        }
+    },
+    <span class="hljs-comment">// mounted -- Vue声明周期钩子函数之一</span>
+    mounted:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+        Vue.set(<span class="hljs-keyword">this</span>.info,<span class="hljs-string">'age'</span>,<span class="hljs-number">20</span>);
+        <span class="hljs-keyword">this</span>.info.name = <span class="hljs-string">'ASCll'</span>;
+    }
+});
+</div></code></pre>
+<p><strong>图片:使用<code>Vue.set</code>后的结果:</strong><br>
+<img src="Assets/chapter-7-vueset-obj.jpg" alt="image text"></p>
+<h3 id="2-%E6%95%B0%E7%BB%84%E7%9A%84%E7%89%B9%E6%AE%8A%E6%96%B9%E6%B3%95">2. 数组的特殊方法</h3>
+<p>对于JavaScript的数组方法按照操作方式分为两种:</p>
+<ol>
+<li>方法在原数组上进行操作</li>
+<li>方法不在原数组上进行操作,返回操作后的数组</li>
+</ol>
+<p>在分类1中常见的方法有<code>push</code>,<code>pop</code>等,而第二类就是诸如<code>filter</code>,<code>map</code>,<code>concat</code>等方法.</p>
+<p>示例<code>filter</code>的解决方式,其余返回数组的方法同理:</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"item in list"</span> &gt;</span>
+        {{ item }}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">var</span> app = <span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">data</span>: {
+        <span class="hljs-attr">list</span>:[<span class="hljs-number">20</span>,<span class="hljs-number">30</span>,<span class="hljs-number">40</span>,<span class="hljs-number">50</span>]
+    },
+    <span class="hljs-attr">mounted</span>:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+        
+        <span class="hljs-keyword">var</span> result = <span class="hljs-keyword">this</span>.list.filter(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value</span>) </span>{
+            <span class="hljs-keyword">return</span> value&lt;<span class="hljs-number">30</span>;
+        });
+
+        <span class="hljs-built_in">console</span>.log(result) <span class="hljs-comment">// [20]</span>
+
+        <span class="hljs-keyword">this</span>.list = result;
+    }
+});
+</div></code></pre>
+<p>在最终的输出中最后只有结果小于30的内容留了下来,在这个例子中最后只有20被渲染.</p>
+<h1 id="%E6%98%BE%E7%A4%BA%E8%BF%87%E6%BB%A4%E6%8E%92%E5%BA%8F%E7%BB%93%E6%9E%9C">显示过滤/排序结果</h1>
+<blockquote>
+<p>有时，我们想要显示一个数组的过滤或排序副本，而不实际改变或重置原始数据。在这种情况下，可以创建返回过滤或排序数组的计算属性。</p>
+</blockquote>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"n in evenNumbers"</span>&gt;</span>{{ n }}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div>data: {
+  <span class="hljs-attr">numbers</span>: [ <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span> ]
+},
+<span class="hljs-attr">computed</span>: {
+  <span class="hljs-attr">evenNumbers</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.numbers.filter(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">number</span>) </span>{
+      <span class="hljs-keyword">return</span> number % <span class="hljs-number">2</span> === <span class="hljs-number">0</span>
+    })
+  }
+}
+</div></code></pre>
+<blockquote>
+<p>在计算属性不适用的情况下 (例如，在嵌套 v-for 循环中) 你可以使用一个 method 方法：</p>
+</blockquote>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"n in even(numbers)"</span>&gt;</span>{{ n }}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div>data: {
+  <span class="hljs-attr">numbers</span>: [ <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span> ]
+},
+<span class="hljs-attr">methods</span>: {
+  <span class="hljs-attr">even</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">numbers</span>) </span>{
+    <span class="hljs-keyword">return</span> numbers.filter(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">number</span>) </span>{
+      <span class="hljs-keyword">return</span> number % <span class="hljs-number">2</span> === <span class="hljs-number">0</span>
+    })
+  }
+}
+</div></code></pre>
+<h1 id="%E4%B8%80%E6%AE%B5%E5%8F%96%E5%80%BC%E8%8C%83%E5%9B%B4%E7%9A%84-v-for">一段取值范围的 v-for</h1>
+<blockquote>
+<p>v-for 也可以取整数。在这种情况下，它将重复多次模板。</p>
+</blockquote>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"n in 10"</span>&gt;</span>{{ n }} <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p><strong>图片:重复多次整数</strong><br>
+<img src="Assets/chapter-7-v-for-repeatofnum.jpg" alt="image text"></p>
+<h1 id="%E5%9C%A8template%E4%B8%8A%E4%BD%BF%E7%94%A8v-for">在<code>template</code>上使用<code>v-for</code></h1>
+<p>在<code>条件渲染</code>一章我们使用<code>&lt;template&gt;</code>占位元素一次数输出多个占位元素内部的内容.</p>
+<p>在<code>v-for</code>上同样可以使用<code>&lt;template&gt;</code>来渲染多个元素.</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">ul</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">template</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"item in items"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span>&gt;</span>{{ item.msg }}<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"divider"</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"presentation"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">template</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+</div></code></pre>
+<h1 id="%E5%9C%A8v-for%E4%B8%AD%E7%9A%84v-if">在<code>v-for</code>中的<code>v-if</code></h1>
+<p>由于Vue有循环和判断的模板语法,难免不难让使用者想到如下的模板写法:</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"todo in todos"</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">"!todo.isComplete"</span>&gt;</span>
+  {{ todo }}
+<span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+</div></code></pre>
+<p>这是可以运行的Vue会先执行<code>v-if</code>判断,判断通过后才会执行<code>v-for</code>语句.</p>
+<p>在上面的例子中会过滤没有完成的内容的输出.</p>
+<blockquote>
+<p>而如果你的目的是有条件地跳过循环的执行，那么可以将 v-if 置于外层元素 (或 <code>&lt;template&gt;</code>)上。如：</p>
+</blockquote>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">ul</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">"todos.length"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">li</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">"todo in todos"</span>&gt;</span>
+    {{ todo }}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">li</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">ul</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-else</span>&gt;</span>No todos left!<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+</div></code></pre>
+<h2 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%8E%A8%E8%8D%90%E5%9C%A8v-for%E4%B8%AD%E4%BD%BF%E7%94%A8v-if">为什么不推荐在<code>v-for</code>中使用<code>v-if</code></h2>
+<p>实际上这个问题很简单,在<code>v-for</code>中使用<code>v-if</code>无非是为了过滤掉一些数据.</p>
+<p>这么做有很多坏处:</p>
+<ul>
+<li>性能低下</li>
+<li>有多个if的时候模板非常难看</li>
+<li>完全可以在JavaScript替换掉这种写法</li>
+</ul>
+<p>替代方案:</p>
+<ul>
+<li>定义两个列表,一个存放原始数据,另外一个存放过滤后的数据,<code>v-for</code>迭代过滤后的列表.</li>
+<li>将迭代的内容封装为组件,将逻辑判断交由组件.</li>
+</ul>
+
+</body>
+</html>

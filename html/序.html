@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>序.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/*
+
+Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #23241f;
+}
+
+.hljs,
+.hljs-tag,
+.hljs-subst {
+  color: #f8f8f2;
+}
+
+.hljs-strong,
+.hljs-emphasis {
+  color: #a8a8a2;
+}
+
+.hljs-bullet,
+.hljs-quote,
+.hljs-number,
+.hljs-regexp,
+.hljs-literal,
+.hljs-link {
+  color: #ae81ff;
+}
+
+.hljs-code,
+.hljs-title,
+.hljs-section,
+.hljs-selector-class {
+  color: #a6e22e;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-name,
+.hljs-attr {
+  color: #f92672;
+}
+
+.hljs-symbol,
+.hljs-attribute {
+  color: #66d9ef;
+}
+
+.hljs-params,
+.hljs-class .hljs-title {
+  color: #f8f8f2;
+}
+
+.hljs-string,
+.hljs-type,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-selector-id,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-variable {
+  color: #e6db74;
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-meta {
+  color: #75715e;
+}
+
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h1 id="vue%E5%B0%8F%E4%B9%A6">Vue小书</h1>
+<p>Vue小书以Vue文档的基础部分的简化版本,皆在为前端编程基础差的同学准备的,虽然该书被定义为入门书籍但是也要求一定的基础.</p>
+<p>本书按照官方文档进行分章分节编写,依照官方文档修改主要做了如下几个微小的工作:</p>
+<ul>
+<li>为专有名词作注释(具体格式见后文)</li>
+<li>为常见的使用误区做了注释(具体格式见后文)</li>
+<li>覆写或者重写实例让实例更加友好</li>
+<li>对于部分输出结果提供完整的图片</li>
+<li>将部分对于初学者阅读生涩的文字转为容易理解的文字</li>
+<li>删除了高阶的部分</li>
+<li>至少有半数为原创内容</li>
+</ul>
+<p>除此以外的部分都被视为学习者已经了解的部分,在下面的列表中我提出了阅读本书基本的要求:</p>
+<ul>
+<li>HTML
+<ul>
+<li><code>div</code>标签</li>
+<li><code>p</code>标签</li>
+<li><code>head</code>标签</li>
+<li><code>body</code>标签</li>
+<li><code>html</code>标签</li>
+<li><code>a</code>标签</li>
+<li><code>script</code>标签</li>
+<li>以及<code>元素</code>和<code>属性</code>的概念.</li>
+</ul>
+</li>
+<li>Css
+<ul>
+<li>id选择器</li>
+<li>class选择器</li>
+<li>Tag选择器</li>
+<li>后代选择器</li>
+<li>子元素选择器</li>
+<li>兄弟选择器</li>
+<li>伪类选择器
+<ul>
+<li>hover:</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>JavaScript
+<ul>
+<li>什么是实例</li>
+<li>什么是对象字面量</li>
+<li>JavaScript中的面向对象的基础知识</li>
+<li>什么是表达式</li>
+<li>什么是基本数据类型</li>
+<li>JavaScript的作用域</li>
+<li>什么是函数</li>
+<li>JavaScript中this的指向</li>
+<li>DOM的概念</li>
+<li>事件的概念</li>
+</ul>
+</li>
+<li>路径
+<ul>
+<li>相对路径</li>
+<li>绝对路径</li>
+<li>域路径</li>
+</ul>
+</li>
+</ul>
+<p>除此以外的部分,有两种类型的前置知识,这部分我会在下方提供注释:</p>
+<ul>
+<li>Vue中的名词</li>
+<li>编程名词</li>
+</ul>
+<p>这部分我会使用<code>(1)</code>的形式,提供注释在段落结束就会提供解释.</p>
+<ul>
+<li>JavaScript的高阶部分</li>
+<li>剩余的其他部分</li>
+</ul>
+<p>这部分我会使用<code>{1}</code>的形式来提供注释.</p>
+<h1 id="%E6%9C%AC%E4%B9%A6%E7%9A%84%E9%98%85%E8%AF%BB%E6%A0%BC%E5%BC%8F">本书的阅读格式</h1>
+<p>本书使用<code>markdown</code>格式进行编写,在阅读时候有如下几种样式,具有不同的含义:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 这是代码的样式.</span>
+
+<span class="hljs-keyword">var</span> a = <span class="hljs-string">'hello world'</span>;
+</div></code></pre>
+<blockquote>
+<p>这种是引用的样式,在本书中这种字体颜色代表官方文档中的原话.</p>
+</blockquote>
+<p><strong>这是着重一句话的意思.</strong></p>
+<p><strong>xxx</strong>:这种写法一般用于提示和警告.</p>
+<p>这句话此处含有<code>专有名词或者代码片段</code>的提示.</p>
+<p>这句话此处含有<strong>加粗</strong>用于着重词的处理.</p>
+<p>这是一行普通的文本样式.</p>
+<h1 id="%E6%9C%AC%E4%B9%A6vue%E7%9A%84%E5%BC%95%E5%85%A5%E6%96%B9%E5%BC%8F">本书Vue的引入方式</h1>
+<p>本书属于入门类型,Vue的实际使用和书中使用的方式有很大出入,可以说完全不一样.</p>
+<p>本书使用Vue的方式就是直接使用<code>script</code>标签进行引入Vue.</p>
+<p>例如:</p>
+<pre class="hljs"><code><div>&lt;script src=&quot;vue.js&quot; type=&quot;text/javascript&quot; &gt;&lt;/script&gt;
+</div></code></pre>
+<p><strong>写作本书时候Vue的版本为<code>2.5.17</code>,当有大版本升级的时候例如<code>3.x.x</code>的时候本书就不适合阅读了.</strong></p>
+<h1 id="%E5%AE%98%E7%BD%91%E6%96%87%E6%A1%A3%E5%9C%B0%E5%9D%80">官网文档地址</h1>
+<blockquote>
+<p>https://cn.vuejs.org/v2/guide/</p>
+</blockquote>
+<h1 id="%E5%A3%B0%E6%98%8E">声明</h1>
+<p><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/cn/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/2.5/cn/88x31.png" /></a><br />本作品采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/2.5/cn/">知识共享署名-非商业性使用-相同方式共享 2.5 中国大陆许可协议</a>进行许可。</p>
+
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>第四章-计算属性和侦听器.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/*
+
+Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-license.org/
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #23241f;
+}
+
+.hljs,
+.hljs-tag,
+.hljs-subst {
+  color: #f8f8f2;
+}
+
+.hljs-strong,
+.hljs-emphasis {
+  color: #a8a8a2;
+}
+
+.hljs-bullet,
+.hljs-quote,
+.hljs-number,
+.hljs-regexp,
+.hljs-literal,
+.hljs-link {
+  color: #ae81ff;
+}
+
+.hljs-code,
+.hljs-title,
+.hljs-section,
+.hljs-selector-class {
+  color: #a6e22e;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-name,
+.hljs-attr {
+  color: #f92672;
+}
+
+.hljs-symbol,
+.hljs-attribute {
+  color: #66d9ef;
+}
+
+.hljs-params,
+.hljs-class .hljs-title {
+  color: #f8f8f2;
+}
+
+.hljs-string,
+.hljs-type,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-selector-id,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-variable {
+  color: #e6db74;
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-meta {
+  color: #75715e;
+}
+
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h1 id="%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7">计算属性</h1>
+<p>这个概念很难理解至少不是很容易理解,这里我不打算使用官网文档中的介绍.</p>
+<p>我们来看一个基本的例子,这个例子展示了如何定义一个计算属性:</p>
+<p>首先所谓的<strong>计算属性</strong>的最基础的JavaScript方面的表现就类似于第一章的<code>methods</code>的使用:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'#example'</span>,
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Hello'</span>
+  },
+  <span class="hljs-attr">methods</span>:{
+    <span class="hljs-attr">reversedMessage</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.message.split(<span class="hljs-string">''</span>).reverse().join(<span class="hljs-string">''</span>)
+    }
+  }
+})
+</div></code></pre>
+<p>替换成计算属性就是:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'#example'</span>,
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Hello'</span>
+  },
+  <span class="hljs-attr">computed</span>:{
+    <span class="hljs-attr">reversedMessage</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.message.split(<span class="hljs-string">''</span>).reverse().join(<span class="hljs-string">''</span>)
+    }
+  }
+})
+</div></code></pre>
+<p>也就是说<strong>计算属性</strong>是Vue实例上的一个对象,而下面挂载的属性和<code>methods</code>一样都是方法.</p>
+<p><strong>那么现在的问题有两个:</strong></p>
+<ol>
+<li>定义这个方法是要干啥?</li>
+<li>计算属性和方法有什么区别?</li>
+</ol>
+<p><strong>问题1回答:</strong><br>
+首先定义这个方法需要完成一个将字符串反转的功能,例如在HTML模板中书写如下的代码:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span> &gt;</span>
+    {{ reversedMessage }}
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>如果我们想要反转这个字符串,可以使用我们事先定义好的方法在此处调用并且将需要返回的字符串传入:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span> &gt;</span>
+    {{ reversedMessage('123456') }}
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>能做到这一点的原因,在第三章模板语法中提到了,在花括号语法中可以执行JavaScript表达式,完整的示例如下:</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span> &gt;</span>
+    {{ reversedMessage('123456') }}
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>:<span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">methods</span>: {
+        <span class="hljs-attr">reversedMessage</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">str</span>) </span>{
+            <span class="hljs-keyword">return</span> str.split(<span class="hljs-string">''</span>).reverse().join(<span class="hljs-string">''</span>);
+        }
+    }
+})
+</div></code></pre>
+<p>输出:</p>
+<pre class="hljs"><code><div>654321
+</div></code></pre>
+<p><strong>问题二回答:</strong><br>
+上面的例子中我们使用方法(methods)来完成了字符串反转的功能,接下来我们使用计算属性来完成同样的功能.</p>
+<p>说道<strong>计算属性</strong>那么什么是计算属性呢?</p>
+<p>看到字面部分<strong>计算属性</strong>这个词,我们可以轻松的将他分为两个部分:</p>
+<ol>
+<li>计算</li>
+<li>属性</li>
+</ol>
+<p><strong>计算</strong>是来自于<strong>计算属性</strong>的定义是一个方法,而<strong>属性</strong>指的是<strong>计算属性</strong>的使用方式是类似于属性.</p>
+<p>我们使用计算属性覆写上面的那个例子:</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span> &gt;</span>
+    {{ reversedMessage }}
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">new</span> Vue({
+  <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-attr">message</span>: <span class="hljs-string">'Hello'</span>
+  },
+  <span class="hljs-attr">computed</span>:{
+    <span class="hljs-attr">reversedMessage</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.message.split(<span class="hljs-string">''</span>).reverse().join(<span class="hljs-string">''</span>)
+    }
+  }
+})
+</div></code></pre>
+<p>输出:</p>
+<pre class="hljs"><code><div>olleH
+</div></code></pre>
+<p>我们看到计算属性的定义在<code>computed</code>中且是一个方法,但是在使用中却成为了一个<code>reversedMessage</code>属性的使用方式.</p>
+<h2 id="%E9%82%A3%E4%B9%88%E4%BD%BF%E7%94%A8%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E5%A4%84">那么使用计算属性有什么好处?</h2>
+<p>作为对比我们观察一下使用<code>methods</code>方式定义的字符串反转方法:</p>
+<pre class="hljs"><code><div>reversedMessage: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.message.split(<span class="hljs-string">''</span>).reverse().join(<span class="hljs-string">''</span>);
+}
+</div></code></pre>
+<p>如果<code>Vue.data.message</code>中的值在很长一段时间内不会变化,但是我们在模板渲染中会多次调用它会造成什么结果?</p>
+<p>没错会进行<strong>重复计算</strong>,例如<code>message</code>的值是<code>hello</code>反转过后是<code>olleH</code>,答案是确定的但是为了渲染我们却要调用它多次,这显然是浪费.</p>
+<p>使用计算属性后Vue会监听内部值的改变,在本例中就是<code>Vue.data.message</code>,在最初的调用中Vue会将结果也就是<code>olleH</code>缓存下来.</p>
+<p>如果后续获取计算属性的时候源数据<code>hello</code>不会发生改变,那么Vue会直接返回上次缓存的结果,在本例中也就是<code>olleH</code>,从而避免额外的计算造成的性能浪费.</p>
+<p><strong>那么Vue如何监视数据的改变呢-侦听器</strong></p>
+<h1 id="%E4%BE%A6%E5%90%AC%E5%99%A8">侦听器</h1>
+<p>侦听器是Vue提供的一个强大而又实用的API,他的定义方式同样类似于<code>methods</code>的定义方式,只不过他的名字叫做<code>watch</code>.</p>
+<p>侦听器会在数据发生改变的时候触发你在<code>watch</code>定义的方法.</p>
+<p>例子:</p>
+<p>HTML:</p>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"root"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">"pwd"</span>&gt;</span>
+        {{ warn }}
+    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">v-model</span>=<span class="hljs-string">"pwd"</span> <span class="hljs-attr">type</span>=<span class="hljs-string">"password"</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">"输入密码"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+</div></code></pre>
+<p>JavaScript:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">new</span> Vue({
+    <span class="hljs-attr">el</span>: <span class="hljs-string">'#root'</span>,
+    <span class="hljs-attr">data</span>: {
+        <span class="hljs-attr">pwd</span>: <span class="hljs-string">''</span>,
+        <span class="hljs-attr">warn</span>:<span class="hljs-string">''</span>
+    },
+    <span class="hljs-attr">watch</span>:{
+        <span class="hljs-attr">pwd</span>:<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">newValue,oldValue</span>)</span>{ <span class="hljs-comment">// 参数1是改变后的 参数2是未改变前的</span>
+            <span class="hljs-keyword">if</span>(newValue.length &lt; <span class="hljs-number">5</span>){
+                <span class="hljs-keyword">this</span>.warn = <span class="hljs-string">'密码太短'</span>;
+            }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(newValue.length&gt;<span class="hljs-number">10</span>){
+                <span class="hljs-keyword">this</span>.warn = <span class="hljs-string">'密码太长'</span>;
+            }<span class="hljs-keyword">else</span>{
+                <span class="hljs-keyword">this</span>.warn = <span class="hljs-string">'通过'</span>;
+            }
+        }
+    }
+})
+</div></code></pre>
+<p>这个例子中我们使用<code>v-modle</code>双向绑定到了<code>pwd</code>属性上,然后使用<code>watch</code>监听它的变化,监听数据的具体方式就是在<code>watch</code>定义一个方法,这个方法的名称要和你监听的<code>data</code>中的数据名称一致.</p>
+<p><strong>尝试运行这个例子然后观察他的代码,你会发现<strong>侦听器</strong>的强大所在.</strong></p>
+
+</body>
+</html>
