@@ -98,12 +98,13 @@ new Vue({
 
 > 下面展示了实例的生命周期。你不需要立马弄明白所有的东西，不过随着你的不断学习和使用，它的参考价值会越来越高。
 
-钩子函数一览表,按照触发顺序:
- - beforeCreate Vue实例内部事件和生命周期初始化完成后触发
- - create 响应式初始化完成后触发
- - beforeMount 模板编译完成后触发
- - mounted 追加到html中后触发
- - beforeUpdate 数据改变后触发
- - updated 视图被重新渲染后触发
- - beforeDestroy 调用`$destroy()`方法后触发
- - destroyed 内部子组件以监听器销毁后触发
+常见生命周期钩子函数一览:
+ - beforeCreate 在实例初始化之后，数据观测 `(data observer)` 和 `event/watcher` 事件配置之前被调用。
+ - create 在实例创建完成后被立即调用,数据观测和事件配置完成.
+ - beforeMount 在挂载(到HTML中)开始之前被调用：相关的`render`(渲染)函数首次被调用。
+ - mounted HTML部分替换完成后触发.
+ - beforeUpdate 数据更新时调用，发生在虚拟 DOM 打补丁之前。
+ - updated 由于数据更改导致的虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子。
+ - beforeDestroy 实例销毁之前调用。在这一步，实例仍然完全可用。
+ - destroyed Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。
+ - 
